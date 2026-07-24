@@ -1,0 +1,198 @@
+name: Rebuild Corrientes map
+
+on:
+  push:
+    paths:
+      - .github/workflows/rebuild-corrientes-map.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out published branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+
+      - name: Download official geographic data
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p raw
+          curl --fail --location --retry 5 \
+            'https://apis.datos.gob.ar/georef/api/departamentos.geojson' \
+            --output raw/departamentos.geojson
+          curl --fail --location --retry 5 \
+            'https://apis.datos.gob.ar/georef/api/municipios.geojson' \
+            --output raw/municipios.geojson
+          curl --fail --location --retry 5 \
+            'https://ide.transporte.gob.ar/geoserver/idera/ows?maxFeatures=10000&outputFormat=application%2Fjson&request=GetFeature&service=WFS&typeName=idera%3ARutas_Nacionales&version=1.0.0' \
+            --output raw/rutas-nacionales.geojson
+          curl --insecure --fail --location --retry 5 \
+            'https://wms.ign.gob.ar/geoserver/transporte/ows?maxFeatures=100000&outputFormat=application%2Fjson&request=GetFeature&service=WFS&typeName=transporte%3Avial_provincial&version=1.0.0' \
+            --output raw/rutas-provinciales.geojson
+
+      - name: Install geometry tools
+        run: python -m pip install --disable-pip-version-check shapely
+
+      - name: Build bundled map data and repair Safari cache handling
+        shell: python
+        run: |
+          import json
+          import unicodedata
+          from pathlib import Path
+          from shapely.geometry import shape, mapping
+          from shapely.ops import unary_union
+
+          def norm(value):
+              value = unicodedata.normalize('NFD', str(value or ''))
+              return ''.join(ch for ch in value if unicodedata.category(ch) != 'Mn').lower()
+
+          def is_corrientes(feature):
+              props = feature.get('properties') or {}
+              province = props.get('provincia') or {}
+              if isinstance(province, dict):
+                  pid = str(province.get('id') or '')
+                  pname = province.get('nombre')
+              else:
+                  pid = str(props.get('provincia_id') or '')
+                  pname = props.get('provincia_nombre')
+              return pid.zfill(2) == '18' or norm(pname) == 'corrientes'
+
+          departments_all = json.loads(Path('raw/departamentos.geojson').read_text(encoding='utf-8'))
+          municipalities_all = json.loads(Path('raw/municipios.geojson').read_text(encoding='utf-8'))
+          departments = [f for f in departments_all.get('features', []) if is_corrientes(f)]
+          municipalities = [f for f in municipalities_all.get('features', []) if is_corrientes(f)]
+          if len(departments) != 25:
+              raise SystemExit(f'Expected 25 departments, got {len(departments)}')
+          if len(municipalities) < 70:
+              raise SystemExit(f'Expected at least 70 municipalities, got {len(municipalities)}')
+
+          province = unary_union([shape(f['geometry']) for f in departments]).buffer(0)
+
+          def compact(features, tolerance):
+              output = []
+              for feature in features:
+                  geom_payload = feature.get('geometry')
+                  if not geom_payload:
+                      continue
+                  geom = shape(geom_payload)
+                  if geom.is_empty:
+                      continue
+                  geom = geom.simplify(tolerance, preserve_topology=True)
+                  props = feature.get('properties') or {}
+                  keep = {}
+                  for key in ('nombre', 'name', 'centroide', 'provincia', 'provincia_id', 'provincia_nombre', 'routeRef', 'routeClass', 'ref', 'ruta', 'numero', 'nro_ruta'):
+                      if key in props:
+                          keep[key] = props[key]
+                  output.append({'type': 'Feature', 'properties': keep, 'geometry': mapping(geom)})
+              return {'type': 'FeatureCollection', 'features': output}
+
+          def clip_routes(path, route_class):
+              payload = json.loads(Path(path).read_text(encoding='utf-8'))
+              output = []
+              for feature in payload.get('features', []):
+                  geometry = feature.get('geometry')
+                  if not geometry:
+                      continue
+                  geom = shape(geometry)
+                  if geom.is_empty or not geom.intersects(province):
+                      continue
+                  clipped = geom.intersection(province)
+                  if clipped.is_empty:
+                      continue
+                  if clipped.geom_type not in {'LineString', 'MultiLineString'}:
+                      parts = [part for part in getattr(clipped, 'geoms', []) if part.geom_type in {'LineString', 'MultiLineString'}]
+                      if not parts:
+                          continue
+                      clipped = unary_union(parts)
+                  props = dict(feature.get('properties') or {})
+                  props['routeClass'] = route_class
+                  output.append({'type': 'Feature', 'properties': props, 'geometry': mapping(clipped)})
+              if not output:
+                  raise SystemExit(f'No {route_class} routes found')
+              return output
+
+          national = clip_routes('raw/rutas-nacionales.geojson', 'national')
+          provincial = clip_routes('raw/rutas-provinciales.geojson', 'provincial')
+
+          data = {
+              'departments': compact(departments, 0.0018),
+              'municipalities': compact(municipalities, 0.0018),
+              'nationalRoutes': compact(national, 0.003),
+              'provincialRoutes': compact(provincial, 0.003),
+          }
+          Path('map-data.js').write_text(
+              'window.CORRIENTES_MAP_DATA=' + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + ';\n',
+              encoding='utf-8'
+          )
+
+          index_path = Path('index.html')
+          text = index_path.read_text(encoding='utf-8')
+          if '<script src="map-data.js"></script>' not in text:
+              text = text.replace('<script>\nconst results=', '<script src="map-data.js"></script>\n<script>\nconst results=')
+
+          old_boundaries = "async function loadBoundaries(level){if(state.boundaries[level])return state.boundaries[level];const url=level==='departments'?'https://apis.datos.gob.ar/georef/api/departamentos.geojson':'https://apis.datos.gob.ar/georef/api/municipios.geojson';const d=await json(url);const fs=(d.features||[]).filter(f=>{const p=f.properties?.provincia||{};return String(p.id||f.properties?.provincia_id||'').padStart(2,'0')==='18'||norm(p.nombre||f.properties?.provincia_nombre)==='corrientes'}).filter(f=>['Polygon','MultiPolygon'].includes(f.geometry?.type));if(!fs.length)throw Error('No se recibieron polígonos');state.boundaries[level]=fs;return fs}"
+          new_boundaries = "async function loadBoundaries(level){if(state.boundaries[level])return state.boundaries[level];const d=window.CORRIENTES_MAP_DATA?.[level];const fs=(d?.features||[]).filter(f=>['Polygon','MultiPolygon'].includes(f.geometry?.type));if(!fs.length)throw Error('Los límites locales no están disponibles');state.boundaries[level]=fs;return fs}"
+          old_routes = "async function loadRoutes(){const bbox='-59.9,-30.9,-55.5,-27.1';const urls={national:`https://ide.transporte.gob.ar/geoserver/idera/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=idera:Rutas_Nacionales&outputFormat=application/json&maxFeatures=5000&bbox=${bbox}`,provincial:`https://wms.ign.gob.ar/geoserver/transporte/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=transporte:vial_provincial&outputFormat=application/json&maxFeatures=10000&bbox=${bbox}`};await Promise.all(Object.entries(urls).map(async([k,u])=>{try{state.routes[k]=(await json(u)).features||[]}catch(e){state.routes[k]=[]}}))}"
+          new_routes = "async function loadRoutes(){const d=window.CORRIENTES_MAP_DATA||{};state.routes.national=d.nationalRoutes?.features||[];state.routes.provincial=d.provincialRoutes?.features||[]}"
+          if old_boundaries in text:
+              text = text.replace(old_boundaries, new_boundaries)
+          if old_routes in text:
+              text = text.replace(old_routes, new_routes)
+          text = text.replace("Lista para instalar · datos públicos", "Lista para instalar · mapa local incluido")
+          index_path.write_text(text, encoding='utf-8')
+
+          Path('service-worker.js').write_text("""const CACHE = 'corrientes-ti-test-v2';
+          const SHELL = ['./','./index.html','./manifest.webmanifest','./icon.svg','./map-data.js'];
+          self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting())));
+          self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())));
+          self.addEventListener('fetch', event => {
+            if (event.request.method !== 'GET') return;
+            const requestUrl = new URL(event.request.url);
+            if (requestUrl.origin !== self.location.origin) return;
+            event.respondWith((async () => {
+              const cached = await caches.match(event.request);
+              try {
+                const response = await fetch(event.request);
+                if (response && response.ok) {
+                  const cache = await caches.open(CACHE);
+                  cache.put(event.request, response.clone());
+                }
+                return response;
+              } catch (error) {
+                if (cached) return cached;
+                if (event.request.mode === 'navigate') {
+                  const fallback = await caches.match('./index.html');
+                  if (fallback) return fallback;
+                }
+                return new Response('Recurso no disponible sin conexión.', {status: 503, headers: {'Content-Type': 'text/plain; charset=utf-8'}});
+              }
+            })());
+          });
+          """, encoding='utf-8')
+
+          print('departments', len(data['departments']['features']))
+          print('municipalities', len(data['municipalities']['features']))
+          print('national routes', len(data['nationalRoutes']['features']))
+          print('provincial routes', len(data['provincialRoutes']['features']))
+          print('map-data bytes', Path('map-data.js').stat().st_size)
+
+      - name: Publish repaired map
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html service-worker.js map-data.js
+          if git diff --cached --quiet; then
+            echo 'No changes to publish.'
+            exit 0
+          fi
+          git commit -m 'Bundle Corrientes map data for Safari'
+          git push origin HEAD:gh-pages
