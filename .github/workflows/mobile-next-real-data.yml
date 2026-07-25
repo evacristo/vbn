@@ -40,8 +40,8 @@ jobs:
                   const errors = [];
                   page.on('pageerror', error => errors.push(error.message));
                   await page.goto(`http://127.0.0.1:8765/${route}/index.html`);
-                  await page.getByLabel('Usuario').fill('Auditoria');
-                  await page.getByLabel('Contraseña').fill('Auditoria');
+                  await page.locator('#loginUser').fill('Auditoria');
+                  await page.locator('#loginPassword').fill('Auditoria');
                   await page.getByRole('button', { name: 'Entrar' }).click();
                   await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 30000 });
                   await expect(page.locator('#homeKpis article').first()).toContainText('470');
@@ -66,6 +66,28 @@ jobs:
               });
             }
           }
+
+          test.describe('territorio-mobile-pro-offline', () => {
+            test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+            test('reopens official data without a network connection', async ({ page, context }) => {
+              const errors = [];
+              page.on('pageerror', error => errors.push(error.message));
+              await page.goto('http://127.0.0.1:8765/territorio-mobile-pro/index.html');
+              await page.locator('#loginUser').fill('Offline');
+              await page.locator('#loginPassword').fill('Offline');
+              await page.getByRole('button', { name: 'Entrar' }).click();
+              await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 30000 });
+              await page.evaluate(() => navigator.serviceWorker.ready);
+              await page.reload();
+              await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 30000 });
+              await context.setOffline(true);
+              await page.reload();
+              await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 30000 });
+              await expect(page.locator('#homeKpis article').first()).toContainText('470');
+              await context.setOffline(false);
+              expect(errors).toEqual([]);
+            });
+          });
           JS
       - run: |
           python3 -m http.server 8765 --directory site >/tmp/mobile-real.log 2>&1 &
