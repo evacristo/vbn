@@ -7,8 +7,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Corrientes TI">
-<link rel="manifest" href="manifest-v2.webmanifest?v=4">
+<link rel="manifest" href="manifest-v2.webmanifest?v=6">
 <link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="network-lla.css?v=2">
+<link rel="stylesheet" href="intelligence-suite.css?v=1">
 <title>Corrientes · Inteligencia Territorial</title>
 <style>
 :root{--bg:#f5f3f7;--panel:#fff;--ink:#172033;--muted:#667085;--line:#ddd8e4;--accent:#6f32a8;--rn:#b42318;--rp:#b7791f}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.app{max-width:1050px;margin:auto;padding:calc(env(safe-area-inset-top) + 12px) 12px calc(env(safe-area-inset-bottom) + 28px)}header{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:12px}.brand small{color:var(--accent);font-weight:800;letter-spacing:.08em;font-size:10px}.brand h1{font-size:19px;margin:3px 0}.status{font-size:12px;color:var(--muted)}nav{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px}button,select{font:inherit}nav button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;color:var(--ink)}nav button.active{background:var(--accent);color:#fff;border-color:var(--accent)}section{display:none}section.active{display:block}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:13px}.card span{display:block;color:var(--muted);font-size:12px}.card strong{font-size:23px}.panel{margin-top:11px}.toolbar{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field{display:grid;gap:4px;min-width:0}.field label{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase}.field select{min-width:0;width:100%;border:1px solid var(--line);border-radius:11px;padding:10px;background:#fff;color:var(--ink)}.checks{display:flex;gap:12px;flex-wrap:wrap;padding:12px 0}.checks label{font-size:13px;color:var(--muted)}.mapwrap{position:relative;background:#edf1f5;border-radius:14px;overflow:hidden;min-height:390px}.mapwrap svg{display:block;width:100%;height:auto;min-height:390px}.territory{stroke:#4b5563;stroke-width:.65;vector-effect:non-scaling-stroke}.territory:active{stroke:#111827;stroke-width:2}.route-national{fill:none;stroke:var(--rn);stroke-width:2.2;vector-effect:non-scaling-stroke}.route-provincial{fill:none;stroke:var(--rp);stroke-width:1.1;stroke-dasharray:5 4;vector-effect:non-scaling-stroke}.label{font-size:8px;text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:2px;pointer-events:none}.legend{display:flex;gap:11px;flex-wrap:wrap;margin-top:9px;font-size:12px;color:var(--muted)}.swatch{display:inline-block;width:17px;height:5px;border-radius:4px;margin-right:4px}.detail{font-size:13px;color:var(--muted);line-height:1.45}.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:9px 5px;border-bottom:1px solid var(--line);font-size:13px}.pill{display:inline-block;padding:3px 7px;border-radius:999px;background:#efe7f5;color:var(--accent);font-size:11px;font-weight:700}@media(max-width:650px){.cards{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr}.mapwrap,.mapwrap svg{min-height:470px}.table th:nth-child(2),.table td:nth-child(2){display:none}}
@@ -16,11 +18,11 @@
 </head>
 <body>
 <div class="app">
-<header><div class="brand"><small>INTELIGENCIA TERRITORIAL</small><h1>Corrientes · mapa político</h1><div class="status" id="status">Mapa local · candidatos LLA 2025 incorporados</div></div></header>
+<header><div class="brand"><small>INTELIGENCIA TERRITORIAL</small><h1>Corrientes · mapa político</h1><div class="status" id="status">Suite territorial · base LLA 2025 incorporada</div></div></header>
 <nav><button data-view="summary" class="active">Resumen</button><button data-view="map">Mapa</button><button data-view="elections">Elecciones</button></nav>
 <section id="summary" class="active">
-<div class="cards"><div class="card"><span>LLA · Diputados 2025</span><strong>32,67%</strong></div><div class="card"><span>Votos LLA</span><strong>178.294</strong></div><div class="card"><span>Bancas obtenidas</span><strong>1</strong></div></div>
-<div class="panel"><h2>Base pública cargada</h2><p class="detail">Elección nacional legislativa del 26 de octubre de 2025. La Libertad Avanza presentó la Lista 501, encabezada por María Virginia Gallardo, seguida por Isidro Gapel Rekosup y Aimará Poderda.</p><p class="detail">Esta versión dibuja el mapa con geometría incluida en el propio sitio. No descarga calles ni utiliza un mapa externo.</p></div>
+<div class="cards"><div class="card"><span>Personas LLA incorporadas</span><strong>470</strong></div><div class="card"><span>Candidaturas oficializadas</span><strong>471</strong></div><div class="card"><span>Municipios revisados</span><strong>74</strong></div></div>
+<div class="panel"><h2>Base pública y análisis local</h2><p class="detail">La aplicación contiene las candidaturas provinciales y municipales oficializadas de La Libertad Avanza en Corrientes durante 2025, además del mapa político local.</p><p class="detail">Los datos oficiales permanecen separados de las notas, relaciones, fuentes, evaluaciones y eventos que agregues. El análisis propio se guarda solamente en este dispositivo y puede exportarse desde la sección Datos.</p></div>
 </section>
 <section id="map">
 <div class="panel">
@@ -50,6 +52,7 @@ function draw(){const svg=document.getElementById('mapSvg');const features=state
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button,section').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.view).classList.add('active');if(b.dataset.view==='map')draw()}));
 document.getElementById('level').addEventListener('change',e=>{state.level=e.target.value;draw()});document.getElementById('contest').addEventListener('change',e=>{state.contest=e.target.value;draw()});['showNational','showProvincial','showLabels'].forEach(id=>document.getElementById(id).addEventListener('change',draw));
 </script>
-<script src="lla-candidates-2025.js?v=1"></script>
-<script src="network-lla.js?v=1"></script>
+<script src="lla-candidates-2025.js?v=2"></script>
+<script src="network-lla.js?v=2"></script>
+<script src="intelligence-suite.js?v=1"></script>
 </body></html>
