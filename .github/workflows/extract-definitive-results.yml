@@ -1,66 +1,152 @@
-name: Extract definitive Corrientes results
+name: Publish definitive Corrientes results
 
 on:
   pull_request:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  extract:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out result builder
+        uses: actions/checkout@v4
+        with:
+          path: source
+
+      - name: Check out published application
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+          fetch-depth: 0
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - run: python -m pip install --disable-pip-version-check requests
-      - name: Extract official data
-        id: extraction
-        continue-on-error: true
+
+      - name: Extract official definitive results
         run: |
           set -o pipefail
-          PYTHONPATH=. python tooling/extract_definitive_results_v3.py --out election-results-2025.json 2>&1 | tee extraction.log
-      - name: Validate extracted data
-        if: steps.extraction.outcome == 'success'
+          PYTHONPATH=source python source/tooling/extract_definitive_results_v3.py --out site/election-results-2025.json 2>&1 | tee extraction.log
+
+      - name: Integrate corrected result interface
         run: |
+          cp source/tooling/results-suite.js site/results-suite.js
+          cp source/tooling/results-suite.css site/results-suite.css
+          python source/tooling/patch_results_site.py site
+
+      - name: Validate result coverage and application
+        run: |
+          node --check site/results-suite.js
+          node --check site/intelligence-suite.js
+          node --check site/network-lla.js
+          python -m json.tool site/election-results-2025.json >/dev/null
+          python -m json.tool site/lla-candidates-2025.json >/dev/null
+          python -m json.tool site/manifest-v2.webmanifest >/dev/null
           python - <<'PY'
           import json
+          import re
+          import unicodedata
           from pathlib import Path
-          data = json.loads(Path('election-results-2025.json').read_text(encoding='utf-8'))
-          report = data['report']
+
+          site = Path('site')
+          results = json.loads((site / 'election-results-2025.json').read_text(encoding='utf-8'))
+          candidates = json.loads((site / 'lla-candidates-2025.json').read_text(encoding='utf-8'))
+          report = results['report']
+          assert report['jurisdictions'] == 100, report
           assert report['departments'] == 25, report
           assert report['municipalities'] == 74, report
-          assert report['badCalculations'] == 0, report
-          assert report['llaMunicipalMayorResults'] >= 50, report
-          assert report['llaMunicipalCouncilResults'] >= 50, report
-          checks = [
-              ('province','Provincia de Corrientes','Gobernador'),
-              ('department','Monte Caseros','Gobernador'),
-              ('municipality','Monte Caseros','Intendente'),
-              ('municipality','Monte Caseros','Concejales'),
-              ('municipality','Ramada Paso','Intendente'),
-              ('municipality','Ramada Paso','Concejales'),
-          ]
-          for level, jurisdiction, category in checks:
-              key = f"{level}|{jurisdiction.upper()}|{category.upper()}"
-              row = data['llaIndex'].get(key)
-              print('CHECK', level, jurisdiction, category, row)
-              assert row, (level, jurisdiction, category)
+          assert report['llaMunicipalMayorResults'] == 58, report
+          assert report['llaMunicipalCouncilResults'] == 58, report
+          assert report['errors'] == [], report
+
+          lla_differences = [row['calculationDifference'] or 0 for row in results['llaResults']]
+          all_differences = [row['calculationDifference'] or 0 for row in results['results']]
+          assert max(lla_differences) <= 0.011, max(lla_differences)
+          assert max(all_differences) <= 0.025, max(all_differences)
+
+          def canon(value):
+              value = unicodedata.normalize('NFD', str(value or ''))
+              value = ''.join(ch for ch in value if unicodedata.category(ch) != 'Mn').upper()
+              return re.sub(r'[^A-Z0-9]+', ' ', value).strip()
+
+          role_category = {
+              'governor': 'Gobernador', 'vice_governor': 'Gobernador',
+              'senator_titular': 'Senadores', 'senator_suplente': 'Senadores',
+              'deputy_titular': 'Diputados', 'deputy_suplente': 'Diputados',
+              'mayor': 'Intendente', 'vice_mayor': 'Intendente',
+              'councillor_titular': 'Concejales', 'councillor_suplente': 'Concejales',
+          }
+          index = results['llaIndex']
+          missing = []
+          for nomination in candidates['nominations']:
+              level = 'province' if nomination['level'] == 'provincial' else 'municipality'
+              key = f"{level}|{canon(nomination['jurisdiction'])}|{canon(role_category[nomination['roleKey']])}"
+              if key not in index:
+                  missing.append((nomination['jurisdiction'], nomination['office'], key))
+          assert not missing, missing[:20]
+
+          def check(level, jurisdiction, category, votes, percentage):
+              key = f"{level}|{canon(jurisdiction)}|{canon(category)}"
+              row = index[key]
+              assert row['votes'] == votes, (key, row)
+              assert abs(row['percentageDisplayed'] - percentage) < 0.001, (key, row)
+              print('CHECK', jurisdiction, category, votes, percentage)
+
+          check('province', 'Provincia de Corrientes', 'Gobernador', 60733, 9.51)
+          check('municipality', 'Monte Caseros', 'Intendente', 2462, 14.87)
+          check('municipality', 'Monte Caseros', 'Concejales', 1871, 11.47)
+          check('municipality', 'Ramada Paso', 'Intendente', 20, 1.67)
+          check('municipality', 'Ramada Paso', 'Concejales', 35, 2.96)
+
+          def map_names(path):
+              text = path.read_text(encoding='utf-8').strip()
+              payload = text.split('=', 1)[1].rstrip(';')
+              return [row[0] for row in json.loads(payload)]
+
+          department_names = map_names(site / 'map-departments.js')
+          municipality_names = map_names(site / 'map-municipalities-1.js') + map_names(site / 'map-municipalities-2.js')
+          department_result_names = {canon(row['jurisdiction']) for row in results['llaResults'] if row['jurisdictionType'] == 'department' and row['category'] == 'Gobernador'}
+          municipality_result_names = {canon(row['jurisdiction']) for row in results['llaResults'] if row['jurisdictionType'] == 'municipality' and row['category'] == 'Gobernador'}
+          missing_departments = [name for name in department_names if canon(name) not in department_result_names]
+          missing_municipalities = [name for name in municipality_names if canon(name) not in municipality_result_names]
+          assert not missing_departments, missing_departments
+          assert not missing_municipalities, missing_municipalities
+
+          html = (site / 'mobile-v2.html').read_text(encoding='utf-8')
+          assert html.count('election-results-2025.js?v=1') == 1
+          assert html.count('results-suite.js?v=1') == 1
+          assert html.count('results-suite.css?v=1') == 1
+          assert 'Provinciales 2025 · Gobernador' in html
+          assert 'Balotaje presidencial 2023 · LLA</option>' not in html
+          assert './mobile-v2.html?v=7' in (site / 'manifest-v2.webmanifest').read_text(encoding='utf-8')
+          print(report)
           PY
-      - name: Upload extraction output and diagnostics
-        if: always()
+
+      - name: Publish corrected percentages
+        working-directory: site
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add mobile-v2.html fix-mobile-map.html manifest-v2.webmanifest election-results-2025.json election-results-2025.js election-results-2025.report.json results-suite.js results-suite.css
+          if git diff --cached --quiet; then
+            echo 'No result changes to publish.'
+            exit 0
+          fi
+          git commit -m 'Correct 2025 election percentages by list and category'
+          git push origin HEAD:gh-pages
+
+      - name: Upload verified result package
         uses: actions/upload-artifact@v4
         with:
-          name: election-results-2025
+          name: verified-election-results-2025
           path: |
-            election-results-2025.json
-            election-results-2025.js
-            election-results-2025.report.json
+            site/election-results-2025.json
+            site/election-results-2025.report.json
             extraction.log
-          if-no-files-found: warn
           retention-days: 3
-      - name: Fail when extraction failed
-        if: steps.extraction.outcome != 'success'
-        run: exit 1
