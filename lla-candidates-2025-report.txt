@@ -1,0 +1,10 @@
+{
+  "generatedAt": "2026-07-25T02:21:59.313251+00:00",
+  "officialPage": "https://www.juscorrientes.gov.ar/prensa/el-juzgado-electoral-dio-a-conocer-la-lista-completa-de-candidatos-para-las-elecciones-del-31-de-agosto/",
+  "municipalitiesReviewed": 74,
+  "municipalitiesWithLLAList": 58,
+  "people": 470,
+  "nominations": 471,
+  "relationships": 1000,
+  "warnings": []
+}

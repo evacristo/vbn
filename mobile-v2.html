@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class="app">
-<header><div class="brand"><small>INTELIGENCIA TERRITORIAL</small><h1>Corrientes · mapa político</h1><div class="status" id="status">Versión móvil local · sin caché anterior</div></div></header>
+<header><div class="brand"><small>INTELIGENCIA TERRITORIAL</small><h1>Corrientes · mapa político</h1><div class="status" id="status">Mapa local · candidatos LLA 2025 incorporados</div></div></header>
 <nav><button data-view="summary" class="active">Resumen</button><button data-view="map">Mapa</button><button data-view="elections">Elecciones</button></nav>
 <section id="summary" class="active">
 <div class="cards"><div class="card"><span>LLA · Diputados 2025</span><strong>32,67%</strong></div><div class="card"><span>Votos LLA</span><strong>178.294</strong></div><div class="card"><span>Bancas obtenidas</span><strong>1</strong></div></div>
@@ -50,4 +50,6 @@ function draw(){const svg=document.getElementById('mapSvg');const features=state
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('nav button,section').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.view).classList.add('active');if(b.dataset.view==='map')draw()}));
 document.getElementById('level').addEventListener('change',e=>{state.level=e.target.value;draw()});document.getElementById('contest').addEventListener('change',e=>{state.contest=e.target.value;draw()});['showNational','showProvincial','showLabels'].forEach(id=>document.getElementById(id).addEventListener('change',draw));
 </script>
+<script src="lla-candidates-2025.js?v=1"></script>
+<script src="network-lla.js?v=1"></script>
 </body></html>
