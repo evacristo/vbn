@@ -1,0 +1,21 @@
+{
+  "jurisdictions": 100,
+  "departments": 25,
+  "municipalities": 74,
+  "allianceResults": 3013,
+  "llaResults": 417,
+  "llaMunicipalMayorResults": 58,
+  "llaMunicipalCouncilResults": 58,
+  "categories": [
+    "Concejales",
+    "Convencionales Constituyentes",
+    "Defensor de los Vecinos",
+    "Diputados",
+    "Gobernador",
+    "Intendente",
+    "Juez de Faltas",
+    "Senadores"
+  ],
+  "badCalculations": 4,
+  "errors": []
+}
