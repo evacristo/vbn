@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: definitive-results-gh-pages
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
