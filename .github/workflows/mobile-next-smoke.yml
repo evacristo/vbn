@@ -64,7 +64,7 @@ jobs:
           for (const device of devices) {
             test.describe(`pro-${device.name}`, () => {
               test.use(device);
-              test('crm, field work, alerts, reports and imports', async ({ page }) => {
+              test('crm, field work, alerts, reports, imports and remote auth UI', async ({ page }) => {
                 const errors = [];
                 page.on('pageerror', error => errors.push(error.message));
                 await page.goto('http://127.0.0.1:8765/territorio-mobile-pro/index.html?fixture=1');
@@ -104,6 +104,11 @@ jobs:
                 await expect(page.locator('#importPreview .list-card')).toHaveCount(1);
                 await page.locator('[data-approve-import]').click();
                 await expect(page.locator('#importPreview .list-card')).toHaveCount(0);
+                await page.locator('[data-target="more"]').click();
+                await page.locator('#view-more [data-open-view="sync"]').click();
+                await expect(page.locator('#remoteAuthPanel')).toBeVisible();
+                await expect(page.locator('#remoteLogin')).toBeVisible();
+                await expect(page.locator('#remoteAdminPanel')).toBeHidden();
                 expect(errors).toEqual([]);
               });
             });
