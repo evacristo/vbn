@@ -13,8 +13,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.17.4",
-    "@openai/apps-sdk-ui": "^0.1.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@openai/apps-sdk-ui": "^0.2.2",
     "express": "^5.1.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
