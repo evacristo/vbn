@@ -1,0 +1,89 @@
+name: Smoke test territorial mobile app
+
+on:
+  push:
+    branches: [chatgpt-mobile-app]
+  workflow_dispatch:
+
+jobs:
+  mobile-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+      - name: Checkout published site
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm install @playwright/test
+          npx playwright install --with-deps chromium
+      - name: Create smoke test
+        run: |
+          cat > mobile-safe.spec.js <<'JS'
+          const { test, expect } = require('@playwright/test');
+
+          const devices = [
+            { name: 'phone', viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true },
+            { name: 'ipad', viewport: { width: 820, height: 1180 }, isMobile: true, hasTouch: true },
+          ];
+
+          for (const device of devices) {
+            test.describe(device.name, () => {
+              test.use(device);
+              test('login, map, people and local relation', async ({ page }) => {
+                const errors = [];
+                page.on('pageerror', error => errors.push(error.message));
+                await page.goto('http://127.0.0.1:8765/territorio-mobile/index.html?fixture=1');
+                await page.getByLabel('Usuario').fill('Ivo');
+                await page.getByLabel('Contraseña').fill('Ivo');
+                await page.getByRole('button', { name: 'Entrar' }).click();
+                await expect(page.locator('#app')).toBeVisible();
+                await expect(page.locator('#dataHealthBadge')).toHaveText('Lista');
+
+                await page.locator('[data-target="map"]').click();
+                await expect(page.locator('#view-map')).toHaveClass(/active/);
+                await expect(page.locator('#territoryMap .territory-path')).toHaveCount(2);
+                await page.locator('#territoryMap .territory-path').first().click();
+                await expect(page.locator('#mapDetail')).toContainText('LLA');
+
+                await page.locator('[data-target="people"]').click();
+                await expect(page.locator('#peopleResults .list-card')).toHaveCount(4);
+                await page.locator('#peopleResults [data-person]').first().click();
+                await expect(page.locator('#bottomSheet')).toBeVisible();
+                await expect(page.locator('#sheetContent h2')).not.toBeEmpty();
+                await page.locator('#sheetClose').click();
+
+                await page.locator('[data-target="network"]').click();
+                await page.locator('#relationshipForm button[type="submit"]').click();
+                await expect(page.locator('#relationshipList .list-card')).toHaveCount(1);
+                await expect(page.locator('#relationGraph .graph-node')).toHaveCount(2);
+                expect(errors).toEqual([]);
+              });
+            });
+          }
+          JS
+      - name: Start static site
+        run: |
+          python3 -m http.server 8765 --directory site >/tmp/mobile-site.log 2>&1 &
+          echo $! > /tmp/mobile-site.pid
+          sleep 2
+      - name: Run mobile smoke tests
+        run: npx playwright test mobile-safe.spec.js --reporter=line
+      - name: Upload failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-safe-failure
+          path: |
+            test-results
+            playwright-report
+            /tmp/mobile-site.log
+          if-no-files-found: ignore
+          retention-days: 3
