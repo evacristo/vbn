@@ -31,18 +31,10 @@ jobs:
 
       - name: Build official candidate database
         run: |
+          python source/tooling/patch_candidate_builder.py source/tooling/build_lla_candidates.py
           python source/tooling/build_lla_candidates.py --site site
           cp source/tooling/network-lla.js site/network-lla.js
           cp source/tooling/network-lla.css site/network-lla.css
-
-      - name: Upload extraction diagnostics
-        uses: actions/upload-artifact@v4
-        with:
-          name: lla-candidates-2025-diagnostic
-          path: |
-            site/lla-candidates-2025.json
-            site/lla-candidates-2025-report.txt
-          retention-days: 3
 
       - name: Validate generated application data
         run: |
@@ -51,23 +43,77 @@ jobs:
           python -m json.tool site/lla-candidates-2025.json >/dev/null
           python - <<'PY'
           import json
+          import unicodedata
+          from collections import Counter
           from pathlib import Path
+
           data = json.loads(Path('site/lla-candidates-2025.json').read_text(encoding='utf-8'))
-          assert len(data['people']) >= 50, len(data['people'])
-          assert len(data['nominations']) >= 60, len(data['nominations'])
-          assert len(data['coverage']) >= 73, len(data['coverage'])
-          print(json.dumps(data['report'], ensure_ascii=False, indent=2))
-          for jurisdiction, office in [
+          people = {row['id']: row for row in data['people']}
+          nominations = data['nominations']
+
+          assert len(data['people']) >= 450, len(data['people'])
+          assert len(nominations) >= 450, len(nominations)
+          assert len(data['coverage']) == 74, len(data['coverage'])
+          assert 55 <= sum(1 for row in data['coverage'] if row['hasOfficialLLAList']) <= 60
+
+          def norm(value):
+              value = unicodedata.normalize('NFD', str(value or ''))
+              return ''.join(ch for ch in value if unicodedata.category(ch) != 'Mn').casefold()
+
+          expected = {
+              'Claudio Lisandro Almirón',
+              'Estanislao Arce',
+              'Juan Jose Ahmar',
+              'Juan Antonio Alegre',
+          }
+          available = {norm(row['name']) for row in data['people']}
+          for name in expected:
+              assert norm(name) in available, name
+
+          for row in nominations:
+              candidate = people[row['personId']]['name']
+              assert 'presentada por' not in norm(candidate), candidate
+              assert len(candidate) < 100, candidate
+
+          for role in ('mayor', 'vice_mayor'):
+              counts = Counter(row['jurisdiction'] for row in nominations if row['roleKey'] == role)
+              duplicates = {jurisdiction: count for jurisdiction, count in counts.items() if count > 1}
+              assert not duplicates, (role, duplicates)
+
+          checks = [
               ('Provincia de Corrientes', 'Gobernador'),
               ('Alvear', 'Intendente'),
               ('Goya', 'Intendente'),
-              ('Capital', 'Concejal titular'),
-          ]:
-              found = [row for row in data['nominations'] if row['jurisdiction'] == jurisdiction and row['office'] == office]
-              print('CHECK', jurisdiction, office, len(found), [row['personId'] for row in found[:3]])
-          print('JURISDICTIONS', sorted({row['jurisdiction'] for row in data['nominations']}))
+              ('Corrientes', 'Concejal titular'),
+              ('Curuzú Cuatiá', 'Intendente'),
+              ('San Antonio de Itatí', 'Intendente'),
+          ]
+          for jurisdiction, office in checks:
+              assert any(row['jurisdiction'] == jurisdiction and row['office'] == office for row in nominations), (jurisdiction, office)
+
+          print(json.dumps(data['report'], ensure_ascii=False, indent=2))
           PY
           grep -q 'network-lla.js' site/mobile-v2.html
+          grep -q 'lla-candidates-2025.js' site/mobile-v2.html
 
-      - name: Hold publication for diagnostic review
-        run: echo 'Diagnostic generated; publication is intentionally paused.'
+      - name: Publish candidate database and network interface
+        working-directory: site
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add mobile-v2.html fix-mobile-map.html lla-candidates-2025.json lla-candidates-2025.js lla-candidates-2025-report.txt network-lla.js network-lla.css
+          if git diff --cached --quiet; then
+            echo 'No changes to publish.'
+            exit 0
+          fi
+          git commit -m 'Add official LLA provincial and municipal candidates'
+          git push origin HEAD:gh-pages
+
+      - name: Upload verified extraction
+        uses: actions/upload-artifact@v4
+        with:
+          name: lla-candidates-2025-verified
+          path: |
+            site/lla-candidates-2025.json
+            site/lla-candidates-2025-report.txt
+          retention-days: 3
