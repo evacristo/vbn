@@ -74,12 +74,12 @@ Aunque la interfaz admite inicialmente usuario y contraseña iguales, el servido
 
 En **Más → Sincronización**:
 
-1. Escribir la URL HTTPS del Worker.
-2. Iniciar sesión contra `/api/login` para obtener un token.
-3. Pegar temporalmente ese token en **Token de dispositivo**.
+1. Escribir la URL HTTPS del Worker y guardar la configuración.
+2. Completar **Usuario remoto** y **Contraseña remota**.
+3. Tocar **Conectar cuenta**.
 4. Usar **Descargar cambios** o **Subir cambios**.
 
-La siguiente iteración de la interfaz reemplazará el pegado manual del token por un formulario de inicio de sesión remoto cuando el Worker esté desplegado.
+Cuando la cuenta remota tiene rol `admin`, la misma pantalla permite crear usuarios administradores, editores o de sólo lectura. El campo **Token de dispositivo** se conserva únicamente como opción técnica avanzada.
 
 ## API principal
 
