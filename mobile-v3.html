@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#6f32a8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Corrientes TI">
+<link rel="manifest" href="manifest-v2.webmanifest?v=9">
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="mobile-v3.css?v=1">
+<link rel="stylesheet" href="network-lla.css?v=3">
+<link rel="stylesheet" href="intelligence-suite.css?v=2">
+<link rel="stylesheet" href="results-suite.css?v=2">
+<title>Corrientes · Inteligencia Territorial</title>
+</head>
+<body>
+<div class="app">
+<header><div class="brand"><small>INTELIGENCIA TERRITORIAL</small><h1>Corrientes · mapa político</h1><div class="status" id="status">Suite estable · escrutinio definitivo 2025</div></div></header>
+<nav aria-label="Secciones principales"><button type="button" data-view="summary" class="active">Resumen</button><button type="button" data-view="map">Mapa</button><button type="button" data-view="elections">Elecciones</button></nav>
+<section id="summary" class="active">
+<div class="cards"><div class="card"><span>Personas LLA incorporadas</span><strong>470</strong></div><div class="card"><span>Candidaturas oficializadas</span><strong>471</strong></div><div class="card"><span>Municipios revisados</span><strong>74</strong></div></div>
+<div class="panel"><h2>Base pública y análisis local</h2><p class="detail">La aplicación contiene candidaturas oficializadas, resultados definitivos por lista y categoría, perfiles territoriales y relaciones políticas editables.</p><p class="detail">Las notas, fuentes, relaciones y evaluaciones propias se guardan solamente en este dispositivo y pueden exportarse desde Datos.</p></div>
+</section>
+<section id="map">
+<div class="panel">
+<div class="toolbar"><div class="field"><label for="level">Nivel territorial</label><select id="level"><option value="departments">Departamentos</option><option value="municipalities">Municipios</option></select></div><div class="field"><label for="contest">Resultado</label><select id="contest"><option value="2025-governor">Provinciales 2025 · Gobernador</option><option value="2025-senators">Provinciales 2025 · Senadores</option><option value="2025-deputies-provincial">Provinciales 2025 · Diputados</option><option value="2025-mayor">Municipales 2025 · Intendente</option><option value="2025-councillors">Municipales 2025 · Concejales</option></select></div></div>
+<div class="checks"><label><input type="checkbox" id="showNational" checked> Rutas nacionales</label><label><input type="checkbox" id="showProvincial" checked> Rutas provinciales</label><label><input type="checkbox" id="showLabels" checked> Etiquetas</label></div>
+<div class="mapwrap"><svg id="mapSvg" viewBox="0 0 900 560" role="img" aria-label="Mapa político de Corrientes"></svg></div>
+<div class="legend"><span><i class="swatch" style="background:#e9edf3"></i>Sin resultado</span><span><i class="swatch" style="background:#6f32a8"></i>Mayor porcentaje LLA</span><span><i class="swatch" style="background:#b42318"></i>Ruta nacional</span><span><i class="swatch" style="background:#b7791f"></i>Ruta provincial</span></div>
+<p class="detail" id="mapDetail">Tocá un territorio para ver el resultado.</p>
+</div>
+</section>
+<section id="elections">
+<div class="panel"><h2>Diputados nacionales · Corrientes 2025</h2><table class="table"><thead><tr><th>Lista</th><th>Votos</th><th>Porcentaje</th></tr></thead><tbody><tr><td>Vamos Corrientes</td><td>185.048</td><td>33,91%</td></tr><tr><td><strong>La Libertad Avanza</strong></td><td><strong>178.294</strong></td><td><strong>32,67%</strong></td></tr><tr><td>Fuerza Patria</td><td>154.546</td><td>28,32%</td></tr><tr><td>Corrientes Nos Une</td><td>20.112</td><td>3,68%</td></tr><tr><td>Ahora</td><td>7.624</td><td>1,39%</td></tr></tbody></table></div>
+<div class="panel"><h2>Candidatos LLA · Lista 501</h2><table class="table"><thead><tr><th>Orden</th><th>Candidato</th><th>Estado</th></tr></thead><tbody><tr><td>1</td><td>María Virginia Gallardo</td><td><span class="pill">Electa</span></td></tr><tr><td>2</td><td>Isidro Gapel Rekosup</td><td>No electo</td></tr><tr><td>3</td><td>Aimará Poderda</td><td>No electa</td></tr></tbody></table></div>
+</section>
+</div>
+<script src="map-departments.js?v=4"></script>
+<script src="map-municipalities-1.js?v=4"></script>
+<script src="map-municipalities-2.js?v=4"></script>
+<script src="map-routes.js?v=4"></script>
+<script src="election-results-2025.js?v=8"></script>
+<script src="mobile-v3.js?v=1"></script>
+<script src="lla-candidates-2025.js?v=2"></script>
+<script src="network-lla.js?v=3"></script>
+<script src="intelligence-suite.js?v=2"></script>
+<script src="results-suite.js?v=2"></script>
+</body>
+</html>
