@@ -9,6 +9,15 @@ import requests
 
 from tooling import extract_definitive_results_v2 as extractor
 
+extractor.core.JURISDICTION_ALIASES.update({
+    "CAA CATI (NUESTRA SENORA DEL ROSARIO DE CAA CATI)": "Caa Cati",
+    "CAROLINA (COLONIA CAROLINA)": "Carolina",
+    "CIUDAD DE CORRIENTES": "Corrientes",
+    "CURUZU CUATIA": "Curuzú Cuatiá",
+    "LAVALLE (PUERTO LAVALLE)": "Lavalle",
+    "SAN ANTONIO - ISLA APIPE GRANDE": "San Antonio Isla Apipé Grande",
+})
+
 _original_fetch = extractor.fetch_task
 
 
