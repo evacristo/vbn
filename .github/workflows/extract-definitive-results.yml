@@ -1,0 +1,44 @@
+name: Extract definitive Corrientes results
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check requests
+      - run: python tooling/extract_definitive_results.py --out definitive-results-2025.json
+      - name: Validate extracted data
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('definitive-results-2025.json').read_text(encoding='utf-8'))
+          report = data['report']
+          assert report['municipalities'] == 74, report
+          assert report['badCalculations'] == 0, report
+          assert report['llaMunicipalMayorResults'] >= 50, report
+          assert report['llaMunicipalCouncilResults'] >= 50, report
+          for jurisdiction, category in [('Provincia de Corrientes','Gobernador'),('Monte Caseros','Intendente'),('Monte Caseros','Concejales'),('Ramada Paso','Intendente'),('Ramada Paso','Concejales')]:
+              key = f"{jurisdiction.upper()}|{category.upper()}"
+              row = data['llaIndex'].get(key)
+              print('CHECK', jurisdiction, category, row)
+              assert row, (jurisdiction, category)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: definitive-results-2025
+          path: |
+            definitive-results-2025.json
+            definitive-results-2025.json.js
+            definitive-results-2025.json.report.json
+          retention-days: 3
