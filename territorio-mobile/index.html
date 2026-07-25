@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#6f32a8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Corrientes Territorial Mobile</title>
+  <link rel="stylesheet" href="styles-20260725.css">
+</head>
+<body>
+  <div id="boot" class="boot" role="status" aria-live="polite">
+    <div class="spinner"></div>
+    <h1>Corrientes Territorial</h1>
+    <p id="bootMessage">Preparando la aplicación móvil…</p>
+  </div>
+
+  <div id="loginView" class="login-view hidden">
+    <form id="loginForm" class="login-card">
+      <span class="eyebrow">ACCESO LOCAL DE PRUEBA</span>
+      <h1>Corrientes Territorial</h1>
+      <p>En esta versión de prueba, el usuario y la contraseña deben ser iguales. Los datos privados quedan guardados únicamente en este dispositivo.</p>
+      <label>Usuario<input id="loginUser" autocomplete="username" autocapitalize="words" required></label>
+      <label>Contraseña<input id="loginPassword" type="password" autocomplete="current-password" required></label>
+      <button type="submit" class="primary">Entrar</button>
+      <small>No es autenticación de servidor. No uses una contraseña personal.</small>
+      <div id="loginError" class="form-error" aria-live="polite"></div>
+    </form>
+  </div>
+
+  <div id="app" class="app hidden">
+    <header class="topbar">
+      <div>
+        <span class="eyebrow">INTELIGENCIA TERRITORIAL</span>
+        <h1 id="viewTitle">Resumen</h1>
+        <p id="statusLine">Cargando base oficial…</p>
+      </div>
+      <button id="accountButton" type="button" class="avatar" aria-label="Cuenta"></button>
+    </header>
+
+    <main id="mainContent">
+      <section id="view-home" class="view active" data-view="home">
+        <div id="homeKpis" class="kpi-grid"></div>
+        <article class="panel intro-panel">
+          <h2>Operación móvil</h2>
+          <p>Consultá resultados, candidatos y territorios; agregá notas y relaciones; exportá todo desde el mismo dispositivo.</p>
+          <div class="quick-grid">
+            <button type="button" data-open-view="map"><b>Mapa</b><span>Resultados por categoría</span></button>
+            <button type="button" data-open-view="people"><b>Personas</b><span>Candidatos y cargos</span></button>
+            <button type="button" data-open-view="territories"><b>Territorios</b><span>Perfil municipal</span></button>
+            <button type="button" data-open-view="network"><b>Red</b><span>Relaciones propias</span></button>
+          </div>
+        </article>
+        <article class="panel">
+          <div class="section-heading"><div><h2>Estado de la base</h2><p>Fuentes oficiales y espacio local</p></div><span id="dataHealthBadge" class="badge review">Cargando</span></div>
+          <div id="dataHealth" class="stack small"></div>
+        </article>
+      </section>
+
+      <section id="view-map" class="view" data-view="map">
+        <article class="panel map-controls">
+          <div class="field-grid two">
+            <label>Nivel<select id="mapLevel"><option value="department">Departamentos</option><option value="municipality">Municipios</option></select></label>
+            <label>Categoría<select id="mapCategory"><option>Gobernador</option><option>Senadores</option><option>Diputados</option><option>Intendente</option><option>Concejales</option></select></label>
+          </div>
+        </article>
+        <article class="map-panel">
+          <div id="mapLoading" class="map-loading">Preparando mapa…</div>
+          <svg id="territoryMap" viewBox="0 0 900 560" aria-label="Mapa político de Corrientes"></svg>
+          <div id="mapLegend" class="map-legend"><span><i class="swatch empty"></i>Sin lista o sin dato</span><span><i class="swatch low"></i>Menor porcentaje</span><span><i class="swatch high"></i>Mayor porcentaje</span></div>
+        </article>
+        <article id="mapDetail" class="panel detail-card"><h2>Tocá un territorio</h2><p>El resultado de LLA para la categoría seleccionada aparecerá acá.</p></article>
+      </section>
+
+      <section id="view-people" class="view" data-view="people">
+        <article class="panel sticky-tools">
+          <label>Buscar<input id="peopleSearch" type="search" placeholder="Nombre, cargo o municipio" autocomplete="off"></label>
+          <div class="field-grid two compact">
+            <label>Municipio<select id="peopleJurisdiction"></select></label>
+            <label>Cargo<select id="peopleRole"></select></label>
+          </div>
+        </article>
+        <div id="peopleResults" class="list"></div>
+      </section>
+
+      <section id="view-territories" class="view" data-view="territories">
+        <article class="panel sticky-tools">
+          <label>Territorio<select id="territorySelect"></select></label>
+        </article>
+        <div id="territoryContent" class="stack"></div>
+      </section>
+
+      <section id="view-network" class="view" data-view="network">
+        <article class="panel">
+          <div class="section-heading"><div><h2>Nueva relación</h2><p>Separada de la base oficial</p></div><span class="badge inferred">Editable</span></div>
+          <form id="relationshipForm" class="stack">
+            <label>Desde<select id="relationFrom" required></select></label>
+            <label>Tipo<select id="relationType"><option value="referente_de">Referente de</option><option value="responde_a">Responde a</option><option value="aliado_de">Aliado de</option><option value="equipo_de">Equipo de</option><option value="formula_con">Fórmula con</option><option value="vinculo_politico">Vínculo político</option><option value="otro">Otro</option></select></label>
+            <label>Hacia<select id="relationTo" required></select></label>
+            <div class="field-grid two">
+              <label>Evidencia<select id="relationEvidence"><option value="declared">Declarada</option><option value="inferred">Inferida</option><option value="review">En revisión</option><option value="official">Oficial</option></select></label>
+              <label>Confianza<select id="relationConfidence"><option value="1">1 · Baja</option><option value="2">2</option><option value="3" selected>3 · Media</option><option value="4">4</option><option value="5">5 · Alta</option></select></label>
+            </div>
+            <label>Fuente pública<input id="relationSource" type="url" inputmode="url" placeholder="https://…"></label>
+            <label>Nota<textarea id="relationNote" rows="3" placeholder="Contexto de la relación"></textarea></label>
+            <button type="submit" class="primary">Guardar relación</button>
+          </form>
+        </article>
+        <article class="panel graph-panel">
+          <div class="section-heading"><div><h2>Grafo local</h2><p>Relaciones del usuario actual</p></div><span id="relationCount" class="badge">0</span></div>
+          <svg id="relationGraph" viewBox="0 0 760 520" aria-label="Grafo de relaciones"></svg>
+        </article>
+        <div id="relationshipList" class="list"></div>
+      </section>
+
+      <section id="view-data" class="view" data-view="data">
+        <article class="panel">
+          <h2>Respaldo</h2>
+          <p class="muted">Exportá antes de cambiar de dispositivo. Las notas y relaciones locales no se sincronizan todavía.</p>
+          <div class="stack actions-stack">
+            <button id="exportJson" type="button" class="primary">Exportar respaldo JSON</button>
+            <button id="exportRelationsCsv" type="button">Exportar relaciones CSV</button>
+            <label class="file-button">Importar respaldo<input id="importJson" type="file" accept="application/json" hidden></label>
+          </div>
+        </article>
+        <article class="panel">
+          <h2>Sesión</h2>
+          <div id="sessionInfo" class="stack small"></div>
+          <button id="logoutButton" type="button" class="danger">Cerrar sesión local</button>
+        </article>
+        <article class="panel">
+          <h2>Diagnóstico</h2>
+          <pre id="diagnosticOutput"></pre>
+        </article>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button type="button" data-target="home" class="active"><span>⌂</span><b>Inicio</b></button>
+      <button type="button" data-target="map"><span>⌖</span><b>Mapa</b></button>
+      <button type="button" data-target="people"><span>◎</span><b>Personas</b></button>
+      <button type="button" data-target="territories"><span>▦</span><b>Territorios</b></button>
+      <button type="button" data-target="network"><span>◇</span><b>Red</b></button>
+      <button type="button" data-target="data"><span>⋯</span><b>Datos</b></button>
+    </nav>
+  </div>
+
+  <div id="sheetBackdrop" class="sheet-backdrop hidden"></div>
+  <aside id="bottomSheet" class="bottom-sheet hidden" aria-modal="true" role="dialog">
+    <div class="sheet-handle"></div>
+    <button id="sheetClose" type="button" class="sheet-close" aria-label="Cerrar">×</button>
+    <div id="sheetContent"></div>
+  </aside>
+
+  <div id="toast" class="toast hidden" aria-live="polite"></div>
+  <script src="app-20260725.js"></script>
+</body>
+</html>
