@@ -3,6 +3,8 @@ name: Smoke test territorial mobile app
 on:
   push:
     branches: [chatgpt-mobile-app]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
