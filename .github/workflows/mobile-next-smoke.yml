@@ -97,14 +97,14 @@ jobs:
         continue-on-error: true
         run: |
           set -o pipefail
-          npx playwright test mobile-next.spec.js --reporter=line 2>&1 | tee mobile-next-test.log
+          npx playwright test mobile-next.spec.js --reporter=line 2>&1 | tee /tmp/mobile-next-test.log
       - name: Upload diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: mobile-next-diagnostics
           path: |
-            mobile-next-test.log
+            /tmp/mobile-next-test.log
             test-results
             playwright-report
             /tmp/mobile-next.log
@@ -112,4 +112,6 @@ jobs:
           retention-days: 3
       - name: Fail after unsuccessful tests
         if: steps.tests.outcome != 'success'
-        run: exit 1
+        run: |
+          cat /tmp/mobile-next-test.log || true
+          exit 1
