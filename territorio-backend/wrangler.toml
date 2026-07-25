@@ -1,0 +1,17 @@
+name = "corrientes-territorial-api"
+main = "src/index.js"
+compatibility_date = "2026-07-01"
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGIN = "https://evacristo.github.io"
+SESSION_TTL_DAYS = "30"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "corrientes-territorial"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "corrientes-territorial-files"
