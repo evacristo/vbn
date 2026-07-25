@@ -10,10 +10,11 @@ html_path = site / "mobile-v2.html"
 html = html_path.read_text(encoding="utf-8")
 
 html = html.replace('manifest-v2.webmanifest?v=6', 'manifest-v2.webmanifest?v=7')
-html = html.replace(
-    '<link rel="stylesheet" href="intelligence-suite.css?v=1">',
-    '<link rel="stylesheet" href="intelligence-suite.css?v=1">\n<link rel="stylesheet" href="results-suite.css?v=1">',
-)
+if '<link rel="stylesheet" href="results-suite.css?v=1">' not in html:
+    style_anchor = '<link rel="stylesheet" href="intelligence-suite.css?v=1">'
+    if style_anchor not in html:
+        raise SystemExit('Intelligence stylesheet anchor not found')
+    html = html.replace(style_anchor, style_anchor + '\n<link rel="stylesheet" href="results-suite.css?v=1">')
 html = html.replace(
     'Mapa local · candidatos LLA 2025 incorporados',
     'Escrutinio definitivo 2025 · resultados por lista y categoría',
@@ -38,10 +39,20 @@ if '<script src="results-suite.js?v=1"></script>' not in html:
 
 html_path.write_text(html, encoding="utf-8")
 
+suite_path = site / 'results-suite.js'
+suite = suite_path.read_text(encoding='utf-8')
+old_normalizer = ".toUpperCase().replace(/\\s+/g, ' ').trim()"
+new_normalizer = ".toUpperCase().replace(/[^A-Z0-9]+/g, ' ').replace(/\\s+/g, ' ').trim()"
+if old_normalizer in suite:
+    suite = suite.replace(old_normalizer, new_normalizer, 1)
+elif new_normalizer not in suite:
+    raise SystemExit('Result normalizer fragment not found')
+suite_path.write_text(suite, encoding='utf-8')
+
 fix_path = site / "fix-mobile-map.html"
 fix = fix_path.read_text(encoding="utf-8")
-fix = fix.replace('mobile-v2.html?v=6', 'mobile-v2.html?v=7')
-fix = fix.replace('mobile-v2.html?v=5', 'mobile-v2.html?v=7')
+for version in ('5', '6'):
+    fix = fix.replace(f'mobile-v2.html?v={version}', 'mobile-v2.html?v=7')
 fix = fix.replace('Actualizando el mapa móvil', 'Actualizando resultados electorales')
 fix = fix.replace('Caché eliminado. Abriendo el mapa…', 'Caché eliminado. Abriendo resultados verificados…')
 fix_path.write_text(fix, encoding="utf-8")
