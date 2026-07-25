@@ -18,6 +18,10 @@ replacements = [
         'end_match = re.search(r"\\s2\\s*[°º]\\s*\\)\\s*(?:REGISTRESE|NOTIFIQUESE)", canonical_text[start:], flags=re.I)',
         'end_match = re.search(r"\\s[2-9]\\s*[°º]\\s*\\)", canonical_text[start:], flags=re.I)',
     ),
+    (
+        '    raw = raw.strip(" ;,.-")\n    raw = re.sub(r"^(?:Y\\s+)?',
+        '    raw = raw.strip(" ;,.-")\n    raw = re.sub(r"^a\\s*:?\\s*", "", raw)\n    raw = re.sub(r"^(?:Y\\s+)?',
+    ),
 ]
 
 for old, new in replacements:
@@ -41,10 +45,13 @@ new_jurisdiction = '''        jurisdiction = re.sub(r"^\\d+\\s*[–-]\\s*", "", 
                 "CARLOS PELLEGRINI": "Colonia Carlos Pellegrini",
                 "CONCEPCION": "Concepción del Yaguareté Corá",
                 "CURUZU": "Curuzú Cuatiá",
+                "FELIPE YOFRE": "Felipe Yofré",
+                "ITUZAINGO": "Ituzaingó",
                 "MANTILLA": "Pedro R. Fernández",
                 "SAN ANTONIO - APIPE GRANDE": "San Antonio Isla Apipé Grande",
                 "SANTA ANA": "Santa Ana de los Guácaras",
                 "SANTA ROSA": "Colonia Santa Rosa",
+                "SANTO TOME": "Santo Tomé",
             }
             jurisdiction = jurisdiction_aliases.get(canonical(jurisdiction), smart_title(jurisdiction))
 '''
