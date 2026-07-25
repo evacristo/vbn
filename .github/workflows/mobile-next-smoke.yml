@@ -1,0 +1,115 @@
+name: Smoke test mobile next
+
+on:
+  push:
+    branches: [chatgpt-mobile-app]
+  workflow_dispatch:
+
+jobs:
+  mobile-next:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+      - name: Checkout published site
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm install @playwright/test
+          npx playwright install --with-deps chromium
+      - name: Create tests
+        run: |
+          cat > mobile-next.spec.js <<'JS'
+          const { test, expect } = require('@playwright/test');
+          const devices = [
+            { name: 'phone', viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true },
+            { name: 'ipad', viewport: { width: 820, height: 1180 }, isMobile: true, hasTouch: true },
+          ];
+          for (const device of devices) {
+            test.describe(device.name, () => {
+              test.use(device);
+              test('complete mobile workflow', async ({ page }) => {
+                const errors = [];
+                page.on('pageerror', error => errors.push(error.message));
+                await page.goto('http://127.0.0.1:8765/territorio-mobile-next/index.html?fixture=1');
+                await page.getByLabel('Usuario').fill('Ivo');
+                await page.getByLabel('Contraseña').fill('Ivo');
+                await page.getByRole('button', { name: 'Entrar' }).click();
+                await expect(page.locator('#app')).toBeVisible();
+                await expect(page.locator('#dataHealthBadge')).toHaveText('Lista');
+
+                await page.locator('[data-target="map"]').click();
+                await expect(page.locator('#view-map')).toHaveClass(/active/);
+                await expect(page.locator('#territoryMap .territory-path')).toHaveCount(2);
+                await page.locator('#territoryMap .territory-path').first().click();
+                await expect(page.locator('#mapDetail')).toContainText('Porcentaje');
+
+                await page.locator('[data-target="people"]').click();
+                await expect(page.locator('#peopleResults .list-card')).toHaveCount(4);
+                await page.locator('#peopleResults [data-fav-person]').first().click();
+                await page.locator('#peopleResults [data-person]').first().click();
+                await expect(page.locator('#bottomSheet')).toBeVisible();
+                await page.locator('#personTagsEdit').fill('referente, prueba');
+                await page.locator('#personNoteEdit').fill('Nota móvil de prueba');
+                await page.locator('[data-save-person]').click();
+                await page.locator('#sheetClose').click();
+
+                await page.locator('[data-target="territories"]').click();
+                await expect(page.locator('#territoryContent')).toContainText('Evaluación local');
+                await page.locator('#territoryPriority').selectOption('alta');
+                await page.locator('#territoryNoteEdit').fill('Territorio prioritario');
+                await page.locator('[data-save-territory]').click();
+                await page.locator('#openCompare').click();
+                await expect(page.locator('#view-compare')).toHaveClass(/active/);
+                await expect(page.locator('#compareContent')).toContainText('Diferencia absoluta');
+
+                await page.locator('[data-target="network"]').click();
+                await page.locator('#relationshipForm button[type="submit"]').click();
+                await expect(page.locator('#relationshipList .list-card')).toHaveCount(1);
+                await expect(page.locator('#relationGraph .graph-node')).toHaveCount(2);
+
+                await page.locator('[data-target="more"]').click();
+                await page.locator('[data-open-view="agenda"]').click();
+                await page.locator('#agendaTitle').fill('Seguimiento de prueba');
+                await page.locator('#agendaForm button[type="submit"]').click();
+                await expect(page.locator('#agendaList .list-card')).toHaveCount(1);
+
+                await page.locator('[data-open-view="sources"]').first().click().catch(() => {});
+                if (!(await page.locator('#view-sources').getAttribute('class')).includes('active')) {
+                  await page.locator('[data-target="more"]').click();
+                  await page.locator('[data-open-view="sources"]').click();
+                }
+                await expect(page.locator('#sourceSummary article')).toHaveCount(4);
+                await expect(page.locator('#sourceList .list-card').first()).toBeVisible();
+                await page.locator('[data-verify-source]').first().click();
+                await expect(page.locator('#sourceList .badge').first()).toContainText('Verificada');
+
+                expect(errors).toEqual([]);
+              });
+            });
+          }
+          JS
+      - name: Start static site
+        run: |
+          python3 -m http.server 8765 --directory site >/tmp/mobile-next.log 2>&1 &
+          sleep 2
+      - name: Run tests
+        run: npx playwright test mobile-next.spec.js --reporter=line
+      - name: Upload failures
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-next-failure
+          path: |
+            test-results
+            playwright-report
+            /tmp/mobile-next.log
+          if-no-files-found: ignore
+          retention-days: 3
