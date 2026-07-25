@@ -18,6 +18,22 @@ extractor.core.JURISDICTION_ALIASES.update({
     "SAN ANTONIO - ISLA APIPE GRANDE": "San Antonio Isla Apipé Grande",
 })
 
+
+def bounded_request_result(session: requests.Session, payload: dict) -> dict:
+    response = session.post(
+        f"{extractor.core.API}/api/escrutinio/resultados/buscar",
+        json=payload,
+        timeout=(15, 30),
+        verify=False,
+    )
+    response.raise_for_status()
+    body = response.json()
+    if not body.get("isSuccess") or not body.get("data"):
+        raise RuntimeError(f"Official results request failed: {payload} / {body.get('errors') or body.get('messages')}")
+    return body
+
+
+extractor.core.request_result = bounded_request_result
 _original_fetch = extractor.fetch_task
 
 
@@ -35,7 +51,7 @@ def retry_fetch(task: dict):
             last_error = exc
             if attempt == 5:
                 break
-            delay = min(20, 2 ** attempt) + random.random()
+            delay = min(16, 2 ** attempt) + random.random()
             print(f"RETRY {attempt}/5 {task['type']} {task['display']} in {delay:.1f}s: {exc}", flush=True)
             time.sleep(delay)
     raise last_error or RuntimeError(f"Unknown extraction failure: {task}")
