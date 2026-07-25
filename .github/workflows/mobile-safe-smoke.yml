@@ -37,7 +37,7 @@ jobs:
           ];
 
           for (const device of devices) {
-            test.describe(device.name, () => {
+            test.describe(`${device.name} fixture`, () => {
               test.use(device);
               test('login, map, people and local relation', async ({ page }) => {
                 const errors = [];
@@ -70,6 +70,36 @@ jobs:
               });
             });
           }
+
+          test.describe('complete official dataset on phone', () => {
+            test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+            test('loads all core datasets and real geometry', async ({ page }) => {
+              const errors = [];
+              page.on('pageerror', error => errors.push(error.message));
+              await page.goto('http://127.0.0.1:8765/territorio-mobile/index.html');
+              await page.getByLabel('Usuario').fill('Auditor');
+              await page.getByLabel('Contraseña').fill('Auditor');
+              await page.getByRole('button', { name: 'Entrar' }).click();
+              await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 30000 });
+              await expect(page.locator('#homeKpis article').nth(0)).toContainText('470');
+              await expect(page.locator('#homeKpis article').nth(1)).toContainText('471');
+
+              await page.locator('[data-target="map"]').click();
+              await expect(page.locator('#territoryMap .territory-path')).toHaveCount(25);
+              await page.locator('#mapLevel').selectOption('municipality');
+              await expect(page.locator('#territoryMap .territory-path')).toHaveCount(74);
+
+              await page.locator('[data-target="people"]').click();
+              await page.locator('#peopleSearch').fill('Luciana Mabel López');
+              await expect(page.locator('#peopleResults')).toContainText('Luciana Mabel López');
+
+              await page.locator('[data-target="territories"]').click();
+              const territoryOptions = await page.locator('#territorySelect option').count();
+              expect(territoryOptions).toBeGreaterThanOrEqual(58);
+              await expect(page.locator('#territoryContent')).toContainText('PERFIL TERRITORIAL');
+              expect(errors).toEqual([]);
+            });
+          });
           JS
       - name: Start static site
         run: |
