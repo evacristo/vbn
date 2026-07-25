@@ -16,29 +16,38 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install --disable-pip-version-check requests
-      - run: python tooling/extract_definitive_results.py --out definitive-results-2025.json
+      - run: python tooling/extract_definitive_results_v2.py --out election-results-2025.json
       - name: Validate extracted data
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          data = json.loads(Path('definitive-results-2025.json').read_text(encoding='utf-8'))
+          data = json.loads(Path('election-results-2025.json').read_text(encoding='utf-8'))
           report = data['report']
+          assert report['departments'] == 25, report
           assert report['municipalities'] == 74, report
           assert report['badCalculations'] == 0, report
           assert report['llaMunicipalMayorResults'] >= 50, report
           assert report['llaMunicipalCouncilResults'] >= 50, report
-          for jurisdiction, category in [('Provincia de Corrientes','Gobernador'),('Monte Caseros','Intendente'),('Monte Caseros','Concejales'),('Ramada Paso','Intendente'),('Ramada Paso','Concejales')]:
-              key = f"{jurisdiction.upper()}|{category.upper()}"
+          checks = [
+              ('province','Provincia de Corrientes','Gobernador'),
+              ('department','Monte Caseros','Gobernador'),
+              ('municipality','Monte Caseros','Intendente'),
+              ('municipality','Monte Caseros','Concejales'),
+              ('municipality','Ramada Paso','Intendente'),
+              ('municipality','Ramada Paso','Concejales'),
+          ]
+          for level, jurisdiction, category in checks:
+              key = f"{level}|{jurisdiction.upper()}|{category.upper()}"
               row = data['llaIndex'].get(key)
-              print('CHECK', jurisdiction, category, row)
-              assert row, (jurisdiction, category)
+              print('CHECK', level, jurisdiction, category, row)
+              assert row, (level, jurisdiction, category)
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: definitive-results-2025
+          name: election-results-2025
           path: |
-            definitive-results-2025.json
-            definitive-results-2025.json.js
-            definitive-results-2025.json.report.json
+            election-results-2025.json
+            election-results-2025.js
+            election-results-2025.report.json
           retention-days: 3
