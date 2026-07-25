@@ -1,7 +1,7 @@
 'use strict';
-const VERSION='ct-pro-20260726-1';
+const VERSION='ct-pro-20260726-2';
 const SHELL=[
-  './','./index.html','./pro.css','./pro-addon.js','./manifest.webmanifest','./icon.svg',
+  './','./index.html','./pro.css','./pro-addon.js','./pro-addon-main.js','./coverage-addon.js','./remote-auth-addon.js','./admin-addon.js','./manifest.webmanifest','./icon.svg',
   '../territorio-mobile-next/styles-v2.css?v=1','../territorio-mobile-next/core-v2.js?v=1',
   '../territorio-mobile-next/workspace-v2.js?v=1','../territorio-mobile-next/views-v2.js?v=1',
   '../territorio-mobile-next/main-v2.js?v=1'
