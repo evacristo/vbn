@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="app">
-<header><div class="brand"><small>INTELIGENCIA TERRITORIAL</small><h1>Corrientes · mapa político</h1><div class="status" id="status">Suite territorial · base LLA 2025 incorporada</div></div></header>
+<header><div class="brand"><small>INTELIGENCIA TERRITORIAL</small><h1>Corrientes · mapa político</h1><div class="status" id="status">Escrutinio definitivo 2025 · resultados por lista y categoría</div></div></header>
 <nav><button data-view="summary" class="active">Resumen</button><button data-view="map">Mapa</button><button data-view="elections">Elecciones</button></nav>
 <section id="summary" class="active">
 <div class="cards"><div class="card"><span>Personas LLA incorporadas</span><strong>470</strong></div><div class="card"><span>Candidaturas oficializadas</span><strong>471</strong></div><div class="card"><span>Municipios revisados</span><strong>74</strong></div></div>
@@ -45,9 +45,9 @@
 <script src="map-routes.js?v=4"></script>
 <script src="election-results-2025.js?v=1"></script>
 <script>
-const results={'2023-runoff':{type:'department',rows:{'capital':64.22,'empedrado':50.47,'bella vista':46.51,'san martin':46.68,'saladas':41.34,'san miguel':31.85}},'2025-deputies':{type:'department',rows:{'capital':40.83}},'2025-mayor':{type:'municipality',rows:{'monte caseros':14.87}}};
-const state={level:'departments',contest:'2023-runoff'};
-const norm=s=>(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+const results={};
+const state={level:'departments',contest:'2025-governor'};
+const norm=s=>(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim();
 function color(v){if(v==null)return'#e9edf3';const t=Math.max(0,Math.min(1,v/70)),a=[239,231,247],b=[92,39,132];return`rgb(${a.map((x,i)=>Math.round(x+(b[i]-x)*t)).join(',')})`}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function draw(){const svg=document.getElementById('mapSvg');const features=state.level==='departments'?(window.DEPT||[]):[...(window.MUNI1||[]),...(window.MUNI2||[])];if(!features.length){svg.innerHTML='<text x="450" y="280" text-anchor="middle" fill="#667085">No se cargó la geometría local.</text>';return}const current=results[state.contest],territoryType=state.level==='departments'?'department':'municipality';let html='<rect width="900" height="560" fill="#edf1f5"/>';for(const [name,d,center] of features){const v=current.type===territoryType?current.rows[norm(name)]:null;html+=`<path class="territory" data-name="${esc(name)}" data-value="${v??''}" d="${d}" fill="${color(v)}"><title>${esc(name)}${v!=null?' · LLA '+v.toFixed(2)+'%':' · sin dato cargado'}</title></path>`}if(document.getElementById('showNational').checked&&window.ROUTES?.rn)html+=`<path class="route-national" d="${window.ROUTES.rn}"/>`;if(document.getElementById('showProvincial').checked&&window.ROUTES?.rp)html+=`<path class="route-provincial" d="${window.ROUTES.rp}"/>`;if(document.getElementById('showLabels').checked)for(const [name,,center] of features){html+=`<text class="label" x="${center[0]}" y="${center[1]}">${esc(name)}</text>`}svg.innerHTML=html;svg.querySelectorAll('.territory').forEach(el=>el.addEventListener('click',()=>{document.getElementById('mapDetail').innerHTML=`<strong>${el.dataset.name}</strong> · ${el.dataset.value?`LLA ${Number(el.dataset.value).toFixed(2)}%`:'sin resultado territorial cargado para esta selección'}`}));document.getElementById('status').textContent=`Mapa local listo · ${features.length} territorios`}
