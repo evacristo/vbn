@@ -58,7 +58,8 @@ jobs:
                     await expect(page.locator('#crmPhone')).toBeVisible();
                     await page.locator('#sheetClose').click();
                     await page.locator('[data-target="field"]').click();
-                    await expect(page.locator('#visitTerritory option')).toHaveCount(58);
+                    await expect(page.locator('#visitTerritory option')).toHaveCount(74);
+                    await expect(page.locator('#visitTerritory option', { hasText: 'Goya' })).toHaveCount(1);
                   }
                   expect(errors).toEqual([]);
                 });
