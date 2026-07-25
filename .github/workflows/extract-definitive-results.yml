@@ -16,8 +16,14 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install --disable-pip-version-check requests
-      - run: PYTHONPATH=. python tooling/extract_definitive_results_v2.py --out election-results-2025.json
+      - name: Extract official data
+        id: extraction
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          PYTHONPATH=. python tooling/extract_definitive_results_v2.py --out election-results-2025.json 2>&1 | tee extraction.log
       - name: Validate extracted data
+        if: steps.extraction.outcome == 'success'
         run: |
           python - <<'PY'
           import json
@@ -43,11 +49,18 @@ jobs:
               print('CHECK', level, jurisdiction, category, row)
               assert row, (level, jurisdiction, category)
           PY
-      - uses: actions/upload-artifact@v4
+      - name: Upload extraction output and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: election-results-2025
           path: |
             election-results-2025.json
             election-results-2025.js
             election-results-2025.report.json
+            extraction.log
+          if-no-files-found: warn
           retention-days: 3
+      - name: Fail when extraction failed
+        if: steps.extraction.outcome != 'success'
+        run: exit 1
