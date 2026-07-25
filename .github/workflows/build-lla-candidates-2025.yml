@@ -1,0 +1,83 @@
+name: Build LLA candidates 2025
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out data builder
+        uses: actions/checkout@v4
+        with:
+          path: source
+
+      - name: Check out published application
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+          fetch-depth: 0
+
+      - name: Install PDF and Python tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          python -m pip install --disable-pip-version-check requests beautifulsoup4
+
+      - name: Build official candidate database
+        run: |
+          python source/tooling/build_lla_candidates.py --site site
+          cp source/tooling/network-lla.js site/network-lla.js
+          cp source/tooling/network-lla.css site/network-lla.css
+
+      - name: Validate generated application data
+        run: |
+          node --check site/network-lla.js
+          node --check site/lla-candidates-2025.js
+          python -m json.tool site/lla-candidates-2025.json >/dev/null
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('site/lla-candidates-2025.json').read_text(encoding='utf-8'))
+          assert len(data['people']) >= 50, len(data['people'])
+          assert len(data['nominations']) >= 60, len(data['nominations'])
+          assert len(data['coverage']) >= 73, len(data['coverage'])
+          checks = [
+              ('Provincia de Corrientes', 'Gobernador'),
+              ('Alvear', 'Intendente'),
+              ('Goya', 'Intendente'),
+              ('Capital', 'Concejal titular'),
+          ]
+          for jurisdiction, office in checks:
+              if not any(row['jurisdiction'] == jurisdiction and row['office'] == office for row in data['nominations']):
+                  raise SystemExit(f'Missing expected record: {jurisdiction} / {office}')
+          print(data['report'])
+          PY
+          grep -q 'network-lla.js' site/mobile-v2.html
+
+      - name: Publish candidate database and network interface
+        working-directory: site
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add mobile-v2.html fix-mobile-map.html lla-candidates-2025.json lla-candidates-2025.js lla-candidates-2025-report.txt network-lla.js network-lla.css
+          if git diff --cached --quiet; then
+            echo 'No changes to publish.'
+            exit 0
+          fi
+          git commit -m 'Add official LLA provincial and municipal candidates'
+          git push origin HEAD:gh-pages
+
+      - name: Upload extraction report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lla-candidates-2025
+          path: |
+            site/lla-candidates-2025.json
+            site/lla-candidates-2025-report.txt
+          retention-days: 3
