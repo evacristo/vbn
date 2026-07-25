@@ -92,4 +92,25 @@ jobs:
       - run: |
           python3 -m http.server 8765 --directory site >/tmp/mobile-real.log 2>&1 &
           sleep 2
-      - run: npx playwright test mobile-real.spec.js --reporter=line
+      - name: Run real-data tests
+        id: tests
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npx playwright test mobile-real.spec.js --reporter=line 2>&1 | tee /tmp/mobile-real-test.log
+      - name: Upload real-data diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-real-diagnostics
+          path: |
+            /tmp/mobile-real-test.log
+            /tmp/mobile-real.log
+            test-results
+          if-no-files-found: ignore
+          retention-days: 3
+      - name: Fail after unsuccessful tests
+        if: steps.tests.outcome != 'success'
+        run: |
+          cat /tmp/mobile-real-test.log || true
+          exit 1
