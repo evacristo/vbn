@@ -54,7 +54,7 @@ export interface MapFeature {
   value?: number | null;
 }
 
-export interface WidgetPayload {
+export interface WidgetPayload extends Record<string, unknown> {
   view: 'territory' | 'map' | 'person' | 'graph' | 'search';
   title: string;
   subtitle?: string;
