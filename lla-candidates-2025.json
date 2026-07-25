@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Candidaturas La Libertad Avanza · Corrientes 2025",
-    "generatedAt": "2026-07-25T02:21:59.313251+00:00",
+    "generatedAt": "2026-07-25T02:25:49.211924+00:00",
     "electionDates": [
       "2025-08-31",
       "2025-10-26"
@@ -147,9 +147,9 @@
     },
     {
       "id": "list-lla-felipe-yofre-concejo-deliberante",
-      "name": "LLA · Concejo Deliberante · Felipe Yofre",
+      "name": "LLA · Concejo Deliberante · Felipe Yofré",
       "type": "lista_electoral",
-      "jurisdiction": "Felipe Yofre",
+      "jurisdiction": "Felipe Yofré",
       "branch": "Concejo Deliberante",
       "electionDate": "2025-08-31",
       "parentOrganizationId": "org-lla-corrientes"
@@ -228,9 +228,9 @@
     },
     {
       "id": "list-lla-ituzaingo-concejo-deliberante",
-      "name": "LLA · Concejo Deliberante · Ituzaingo",
+      "name": "LLA · Concejo Deliberante · Ituzaingó",
       "type": "lista_electoral",
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "branch": "Concejo Deliberante",
       "electionDate": "2025-08-31",
       "parentOrganizationId": "org-lla-corrientes"
@@ -480,9 +480,9 @@
     },
     {
       "id": "list-lla-santo-tome-concejo-deliberante",
-      "name": "LLA · Concejo Deliberante · Santo Tome",
+      "name": "LLA · Concejo Deliberante · Santo Tomé",
       "type": "lista_electoral",
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "branch": "Concejo Deliberante",
       "electionDate": "2025-08-31",
       "parentOrganizationId": "org-lla-corrientes"
@@ -669,9 +669,9 @@
     },
     {
       "id": "list-lla-felipe-yofre-ejecutivo-municipal",
-      "name": "LLA · Ejecutivo municipal · Felipe Yofre",
+      "name": "LLA · Ejecutivo municipal · Felipe Yofré",
       "type": "lista_electoral",
-      "jurisdiction": "Felipe Yofre",
+      "jurisdiction": "Felipe Yofré",
       "branch": "Ejecutivo municipal",
       "electionDate": "2025-08-31",
       "parentOrganizationId": "org-lla-corrientes"
@@ -750,9 +750,9 @@
     },
     {
       "id": "list-lla-ituzaingo-ejecutivo-municipal",
-      "name": "LLA · Ejecutivo municipal · Ituzaingo",
+      "name": "LLA · Ejecutivo municipal · Ituzaingó",
       "type": "lista_electoral",
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "branch": "Ejecutivo municipal",
       "electionDate": "2025-08-31",
       "parentOrganizationId": "org-lla-corrientes"
@@ -1002,9 +1002,9 @@
     },
     {
       "id": "list-lla-santo-tome-ejecutivo-municipal",
-      "name": "LLA · Ejecutivo municipal · Santo Tome",
+      "name": "LLA · Ejecutivo municipal · Santo Tomé",
       "type": "lista_electoral",
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "branch": "Ejecutivo municipal",
       "electionDate": "2025-08-31",
       "parentOrganizationId": "org-lla-corrientes"
@@ -1092,34 +1092,6 @@
     }
   ],
   "people": [
-    {
-      "id": "person-a-juan-jose-duarte",
-      "name": "A Juan José Duarte",
-      "officialName": "a JUAN JOSÉ DUARTE",
-      "aliases": [],
-      "sourceType": "resolucion_electoral_oficial"
-    },
-    {
-      "id": "person-a-manuel-fernando-diaz-colodrero",
-      "name": "A Manuel Fernando Diaz Colodrero",
-      "officialName": "a MANUEL FERNANDO DIAZ COLODRERO",
-      "aliases": [],
-      "sourceType": "resolucion_electoral_oficial"
-    },
-    {
-      "id": "person-a-antonio-roman-obregon",
-      "name": "A: Antonio Román Obregón",
-      "officialName": "a: ANTONIO ROMÁN OBREGÓN",
-      "aliases": [],
-      "sourceType": "resolucion_electoral_oficial"
-    },
-    {
-      "id": "person-a-luciana-mabel-lopez",
-      "name": "A: Luciana Mabel López",
-      "officialName": "a: LUCIANA MABEL LÓPEZ",
-      "aliases": [],
-      "sourceType": "resolucion_electoral_oficial"
-    },
     {
       "id": "person-abel-antonio-maciel",
       "name": "Abel Antonio Maciel",
@@ -1282,9 +1254,9 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-alicia-noemi-a-benitez",
-      "name": "Alicia Noemi A Benitez",
-      "officialName": "a BENITEZ, ALICIA NOEMI",
+      "id": "person-alicia-noemi-benitez",
+      "name": "Alicia Noemi Benitez",
+      "officialName": "BENITEZ, ALICIA NOEMI",
       "aliases": [],
       "sourceType": "resolucion_electoral_oficial"
     },
@@ -1382,6 +1354,13 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
+      "id": "person-antonio-roman-obregon",
+      "name": "Antonio Román Obregón",
+      "officialName": "ANTONIO ROMÁN OBREGÓN",
+      "aliases": [],
+      "sourceType": "resolucion_electoral_oficial"
+    },
+    {
       "id": "person-antonio-zapata",
       "name": "Antonio Zapata",
       "officialName": "ZAPATA, ANTONIO",
@@ -1454,9 +1433,9 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-bernardo-damian-a-mino",
-      "name": "Bernardo Damian A Miño",
-      "officialName": "a MIÑO, BERNARDO DAMIAN",
+      "id": "person-bernardo-damian-mino",
+      "name": "Bernardo Damian Miño",
+      "officialName": "MIÑO, BERNARDO DAMIAN",
       "aliases": [],
       "sourceType": "resolucion_electoral_oficial"
     },
@@ -1722,9 +1701,9 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-dacil-mariana-a-gauna",
-      "name": "Dacil Mariana A Gauna",
-      "officialName": "a GAUNA, DACIL MARIANA",
+      "id": "person-dacil-mariana-gauna",
+      "name": "Dacil Mariana Gauna",
+      "officialName": "GAUNA, DACIL MARIANA",
       "aliases": [
         "Mary"
       ],
@@ -1803,9 +1782,9 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-denis-ariel-a-gonzalez",
-      "name": "Denis Ariel A Gonzalez",
-      "officialName": "a GONZALEZ, DENIS ARIEL",
+      "id": "person-denis-ariel-gonzalez",
+      "name": "Denis Ariel Gonzalez",
+      "officialName": "GONZALEZ, DENIS ARIEL",
       "aliases": [],
       "sourceType": "resolucion_electoral_oficial"
     },
@@ -1817,9 +1796,9 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-diego-a-cespedes",
-      "name": "Diego A Cespedes",
-      "officialName": "a CESPEDES, DIEGO",
+      "id": "person-diego-cespedes",
+      "name": "Diego Cespedes",
+      "officialName": "CESPEDES, DIEGO",
       "aliases": [],
       "sourceType": "resolucion_electoral_oficial"
     },
@@ -1887,9 +1866,9 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-eleuterio-maximo-a-ojeda",
-      "name": "Eleuterio Maximo A Ojeda",
-      "officialName": "a OJEDA, ELEUTERIO MAXIMO",
+      "id": "person-eleuterio-maximo-ojeda",
+      "name": "Eleuterio Maximo Ojeda",
+      "officialName": "OJEDA, ELEUTERIO MAXIMO",
       "aliases": [],
       "sourceType": "resolucion_electoral_oficial"
     },
@@ -2267,9 +2246,9 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-gaston-hugo-a-boccalandro",
-      "name": "Gastón Hugo A Boccalandro",
-      "officialName": "a BOCCALANDRO, GASTÓN HUGO",
+      "id": "person-gaston-hugo-boccalandro",
+      "name": "Gastón Hugo Boccalandro",
+      "officialName": "BOCCALANDRO, GASTÓN HUGO",
       "aliases": [],
       "sourceType": "resolucion_electoral_oficial"
     },
@@ -2750,6 +2729,13 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
+      "id": "person-juan-jose-duarte",
+      "name": "Juan José Duarte",
+      "officialName": "JUAN JOSÉ DUARTE",
+      "aliases": [],
+      "sourceType": "resolucion_electoral_oficial"
+    },
+    {
       "id": "person-juan-manuel-gomez",
       "name": "Juan Manuel Gómez",
       "officialName": "GÓMEZ, JUAN MANUEL",
@@ -2869,16 +2855,16 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-leandro-gabriel-a-taborda",
-      "name": "Leandro Gabriel A Taborda",
-      "officialName": "a TABORDA, LEANDRO GABRIEL",
+      "id": "person-leandro-gabriel-fellau",
+      "name": "Leandro Gabriel Fellau",
+      "officialName": "FELLAU, LEANDRO GABRIEL",
       "aliases": [],
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-leandro-gabriel-fellau",
-      "name": "Leandro Gabriel Fellau",
-      "officialName": "FELLAU, LEANDRO GABRIEL",
+      "id": "person-leandro-gabriel-taborda",
+      "name": "Leandro Gabriel Taborda",
+      "officialName": "TABORDA, LEANDRO GABRIEL",
       "aliases": [],
       "sourceType": "resolucion_electoral_oficial"
     },
@@ -2981,6 +2967,13 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
+      "id": "person-luciana-mabel-lopez",
+      "name": "Luciana Mabel López",
+      "officialName": "LUCIANA MABEL LÓPEZ",
+      "aliases": [],
+      "sourceType": "resolucion_electoral_oficial"
+    },
+    {
       "id": "person-luciano-maximiliano-carrillo",
       "name": "Luciano Maximiliano Carrillo",
       "officialName": "CARRILLO, LUCIANO MAXIMILIANO",
@@ -3065,6 +3058,13 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
+      "id": "person-manuel-fernando-diaz-colodrero",
+      "name": "Manuel Fernando Diaz Colodrero",
+      "officialName": "MANUEL FERNANDO DIAZ COLODRERO",
+      "aliases": [],
+      "sourceType": "resolucion_electoral_oficial"
+    },
+    {
       "id": "person-marcelo-alejandro-maidana",
       "name": "Marcelo Alejandro Maidana",
       "officialName": "MAIDANA, MARCELO ALEJANDRO",
@@ -3128,9 +3128,9 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-maria-gabriela-a-correa",
-      "name": "Maria Gabriela A Correa",
-      "officialName": "a CORREA, MARIA GABRIELA",
+      "id": "person-maria-gabriela-correa",
+      "name": "Maria Gabriela Correa",
+      "officialName": "CORREA, MARIA GABRIELA",
       "aliases": [],
       "sourceType": "resolucion_electoral_oficial"
     },
@@ -3319,9 +3319,9 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-mauricio-jose-a-silanes-guido",
-      "name": "Mauricio Jose A Silanes Guido",
-      "officialName": "a SILANES GUIDO, MAURICIO JOSE",
+      "id": "person-mauricio-jose-silanes-guido",
+      "name": "Mauricio Jose Silanes Guido",
+      "officialName": "SILANES GUIDO, MAURICIO JOSE",
       "aliases": [],
       "sourceType": "resolucion_electoral_oficial"
     },
@@ -3566,9 +3566,9 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-nelly-graciela-a-alvarez-rosciani",
-      "name": "Nelly Graciela A Alvarez Rosciani",
-      "officialName": "a ALVAREZ ROSCIANI, NELLY GRACIELA",
+      "id": "person-nelly-graciela-alvarez-rosciani",
+      "name": "Nelly Graciela Alvarez Rosciani",
+      "officialName": "ALVAREZ ROSCIANI, NELLY GRACIELA",
       "aliases": [
         "Kuka"
       ],
@@ -3754,9 +3754,9 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-paolo-cesar-a-claps",
-      "name": "Paolo César A Claps",
-      "officialName": "a CLAPS, PAOLO CÉSAR",
+      "id": "person-paolo-cesar-claps",
+      "name": "Paolo César Claps",
+      "officialName": "CLAPS, PAOLO CÉSAR",
       "aliases": [],
       "sourceType": "resolucion_electoral_oficial"
     },
@@ -3859,9 +3859,9 @@
       "sourceType": "resolucion_electoral_oficial"
     },
     {
-      "id": "person-raul-esteban-juarez",
-      "name": "Raul Esteban Juarez",
-      "officialName": "JUAREZ, RAUL ESTEBAN",
+      "id": "person-raul-esteban-l-juarez",
+      "name": "Raul Esteban L . Juarez",
+      "officialName": "l . JUAREZ, RAUL ESTEBAN",
       "aliases": [],
       "sourceType": "resolucion_electoral_oficial"
     },
@@ -4633,8 +4633,8 @@
       "sourceExpediente": "276730/25"
     },
     {
-      "id": "nom-16de8873562f",
-      "personId": "person-a-antonio-roman-obregon",
+      "id": "nom-b99625d2531b",
+      "personId": "person-antonio-roman-obregon",
       "office": "Viceintendente",
       "roleKey": "vice_mayor",
       "branch": "Ejecutivo municipal",
@@ -4652,8 +4652,8 @@
       "sourceExpediente": "276730/25"
     },
     {
-      "id": "nom-da4f59020dd0",
-      "personId": "person-a-luciana-mabel-lopez",
+      "id": "nom-b4c24c216f4d",
+      "personId": "person-luciana-mabel-lopez",
       "office": "Intendente",
       "roleKey": "mayor",
       "branch": "Ejecutivo municipal",
@@ -4861,8 +4861,8 @@
       "sourceExpediente": "276756/25"
     },
     {
-      "id": "nom-e23b6beadc4a",
-      "personId": "person-maria-gabriela-a-correa",
+      "id": "nom-86d0bd5b4d93",
+      "personId": "person-maria-gabriela-correa",
       "office": "Viceintendente",
       "roleKey": "vice_mayor",
       "branch": "Ejecutivo municipal",
@@ -4880,8 +4880,8 @@
       "sourceExpediente": "276756/25"
     },
     {
-      "id": "nom-f2b3292ea24b",
-      "personId": "person-mauricio-jose-a-silanes-guido",
+      "id": "nom-5a092a2b5f05",
+      "personId": "person-mauricio-jose-silanes-guido",
       "office": "Intendente",
       "roleKey": "mayor",
       "branch": "Ejecutivo municipal",
@@ -4975,8 +4975,8 @@
       "sourceExpediente": "276977/25"
     },
     {
-      "id": "nom-c36fe24e7344",
-      "personId": "person-bernardo-damian-a-mino",
+      "id": "nom-19ed01b68095",
+      "personId": "person-bernardo-damian-mino",
       "office": "Intendente",
       "roleKey": "mayor",
       "branch": "Ejecutivo municipal",
@@ -4994,8 +4994,8 @@
       "sourceExpediente": "276977/25"
     },
     {
-      "id": "nom-0d54709c9b41",
-      "personId": "person-leandro-gabriel-a-taborda",
+      "id": "nom-ca0f2825177e",
+      "personId": "person-leandro-gabriel-taborda",
       "office": "Viceintendente",
       "roleKey": "vice_mayor",
       "branch": "Ejecutivo municipal",
@@ -5070,8 +5070,8 @@
       "sourceExpediente": "276639/25"
     },
     {
-      "id": "nom-6fe356ef9076",
-      "personId": "person-nelly-graciela-a-alvarez-rosciani",
+      "id": "nom-adcba8212326",
+      "personId": "person-nelly-graciela-alvarez-rosciani",
       "office": "Intendente",
       "roleKey": "mayor",
       "branch": "Ejecutivo municipal",
@@ -5089,8 +5089,8 @@
       "sourceExpediente": "276639/25"
     },
     {
-      "id": "nom-9ce59eddadd1",
-      "personId": "person-paolo-cesar-a-claps",
+      "id": "nom-61aa6c7f6cfc",
+      "personId": "person-paolo-cesar-claps",
       "office": "Viceintendente",
       "roleKey": "vice_mayor",
       "branch": "Ejecutivo municipal",
@@ -5184,8 +5184,8 @@
       "sourceExpediente": "276660/25"
     },
     {
-      "id": "nom-9fb068605b46",
-      "personId": "person-a-juan-jose-duarte",
+      "id": "nom-01a183f35202",
+      "personId": "person-juan-jose-duarte",
       "office": "Viceintendente",
       "roleKey": "vice_mayor",
       "branch": "Ejecutivo municipal",
@@ -5203,8 +5203,8 @@
       "sourceExpediente": "276660/25"
     },
     {
-      "id": "nom-a6ddbdfde5e0",
-      "personId": "person-a-manuel-fernando-diaz-colodrero",
+      "id": "nom-6386387564bf",
+      "personId": "person-manuel-fernando-diaz-colodrero",
       "office": "Intendente",
       "roleKey": "mayor",
       "branch": "Ejecutivo municipal",
@@ -5393,8 +5393,8 @@
       "sourceExpediente": null
     },
     {
-      "id": "nom-6200b3a975b7",
-      "personId": "person-eleuterio-maximo-a-ojeda",
+      "id": "nom-2d31c8410d1a",
+      "personId": "person-eleuterio-maximo-ojeda",
       "office": "Viceintendente",
       "roleKey": "vice_mayor",
       "branch": "Ejecutivo municipal",
@@ -5412,8 +5412,8 @@
       "sourceExpediente": null
     },
     {
-      "id": "nom-0fe6e8255925",
-      "personId": "person-gaston-hugo-a-boccalandro",
+      "id": "nom-2ec244e8c67d",
+      "personId": "person-gaston-hugo-boccalandro",
       "office": "Intendente",
       "roleKey": "mayor",
       "branch": "Ejecutivo municipal",
@@ -5507,8 +5507,8 @@
       "sourceExpediente": "276891/25"
     },
     {
-      "id": "nom-610e3a4b88d1",
-      "personId": "person-alicia-noemi-a-benitez",
+      "id": "nom-877805dc241b",
+      "personId": "person-alicia-noemi-benitez",
       "office": "Intendente",
       "roleKey": "mayor",
       "branch": "Ejecutivo municipal",
@@ -5526,8 +5526,8 @@
       "sourceExpediente": "276891/25"
     },
     {
-      "id": "nom-686a397161dd",
-      "personId": "person-denis-ariel-a-gonzalez",
+      "id": "nom-e9a338439686",
+      "personId": "person-denis-ariel-gonzalez",
       "office": "Viceintendente",
       "roleKey": "vice_mayor",
       "branch": "Ejecutivo municipal",
@@ -6856,7 +6856,7 @@
       "sourceExpediente": null
     },
     {
-      "id": "nom-4073d51dc1fe",
+      "id": "nom-458e2ebc461c",
       "personId": "person-coussediere-walter-ricardo",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -6864,7 +6864,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 1,
-      "jurisdiction": "Felipe Yofre",
+      "jurisdiction": "Felipe Yofré",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -6875,7 +6875,7 @@
       "sourceExpediente": "277021/25"
     },
     {
-      "id": "nom-f6a5197a48a7",
+      "id": "nom-fa09c5151efd",
       "personId": "person-leiva-mara-elizabet",
       "office": "Concejal suplente",
       "roleKey": "councillor_suplente",
@@ -6883,7 +6883,7 @@
       "level": "municipal",
       "listType": "suplente",
       "order": 1,
-      "jurisdiction": "Felipe Yofre",
+      "jurisdiction": "Felipe Yofré",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -6894,7 +6894,7 @@
       "sourceExpediente": "277021/25"
     },
     {
-      "id": "nom-037a02b39221",
+      "id": "nom-0ccad37ead3f",
       "personId": "person-gomez-centurion-maria-leticia",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -6902,7 +6902,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 2,
-      "jurisdiction": "Felipe Yofre",
+      "jurisdiction": "Felipe Yofré",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -6913,7 +6913,7 @@
       "sourceExpediente": "277021/25"
     },
     {
-      "id": "nom-e53b75965e63",
+      "id": "nom-bd8bc76ae116",
       "personId": "person-ramon-federico-buera",
       "office": "Concejal suplente",
       "roleKey": "councillor_suplente",
@@ -6921,7 +6921,7 @@
       "level": "municipal",
       "listType": "suplente",
       "order": 2,
-      "jurisdiction": "Felipe Yofre",
+      "jurisdiction": "Felipe Yofré",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -6932,7 +6932,7 @@
       "sourceExpediente": "277021/25"
     },
     {
-      "id": "nom-53436409e30e",
+      "id": "nom-f6b4df1bc43b",
       "personId": "person-daiana-soledad-coussediere",
       "office": "Concejal suplente",
       "roleKey": "councillor_suplente",
@@ -6940,7 +6940,7 @@
       "level": "municipal",
       "listType": "suplente",
       "order": 3,
-      "jurisdiction": "Felipe Yofre",
+      "jurisdiction": "Felipe Yofré",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -6951,7 +6951,7 @@
       "sourceExpediente": "277021/25"
     },
     {
-      "id": "nom-87adbd5f4dae",
+      "id": "nom-9611b8043698",
       "personId": "person-toledo-jonatan-nahuel",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -6959,7 +6959,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 3,
-      "jurisdiction": "Felipe Yofre",
+      "jurisdiction": "Felipe Yofré",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -6970,7 +6970,7 @@
       "sourceExpediente": "277021/25"
     },
     {
-      "id": "nom-061dd945ae75",
+      "id": "nom-d3ca359c1e0c",
       "personId": "person-benitez-diego-osvaldo",
       "office": "Viceintendente",
       "roleKey": "vice_mayor",
@@ -6978,7 +6978,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 1,
-      "jurisdiction": "Felipe Yofre",
+      "jurisdiction": "Felipe Yofré",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -6989,7 +6989,7 @@
       "sourceExpediente": "277021/25"
     },
     {
-      "id": "nom-08c90f65adf6",
+      "id": "nom-2d7b98c22f04",
       "personId": "person-federih-carlos-emilio",
       "office": "Intendente",
       "roleKey": "mayor",
@@ -6997,7 +6997,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 1,
-      "jurisdiction": "Felipe Yofre",
+      "jurisdiction": "Felipe Yofré",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -8224,7 +8224,7 @@
       "sourceExpediente": "276687/25"
     },
     {
-      "id": "nom-680101868559",
+      "id": "nom-0489c05dbb79",
       "personId": "person-jorge-alberto-almara",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -8232,7 +8232,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 1,
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -8243,7 +8243,7 @@
       "sourceExpediente": "276669/25"
     },
     {
-      "id": "nom-98f711530c00",
+      "id": "nom-23d422cecb48",
       "personId": "person-margarita-de-los-santos",
       "office": "Concejal suplente",
       "roleKey": "councillor_suplente",
@@ -8251,7 +8251,7 @@
       "level": "municipal",
       "listType": "suplente",
       "order": 1,
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -8262,7 +8262,7 @@
       "sourceExpediente": "276669/25"
     },
     {
-      "id": "nom-d6b3726cf186",
+      "id": "nom-bdf451e89451",
       "personId": "person-gaston-martin-baez",
       "office": "Concejal suplente",
       "roleKey": "councillor_suplente",
@@ -8270,7 +8270,7 @@
       "level": "municipal",
       "listType": "suplente",
       "order": 2,
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -8281,7 +8281,7 @@
       "sourceExpediente": "276669/25"
     },
     {
-      "id": "nom-cfea71a5315f",
+      "id": "nom-c98aacebd0ca",
       "personId": "person-xiomara-damaris-soto",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -8289,7 +8289,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 2,
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -8300,7 +8300,7 @@
       "sourceExpediente": "276669/25"
     },
     {
-      "id": "nom-0466cc93b4be",
+      "id": "nom-33caacfd305f",
       "personId": "person-alejandro-gabriel-ceferino-escudero",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -8308,7 +8308,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 3,
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -8319,7 +8319,7 @@
       "sourceExpediente": "276669/25"
     },
     {
-      "id": "nom-3c25e12a3605",
+      "id": "nom-8f4da0a06611",
       "personId": "person-berta-torres",
       "office": "Concejal suplente",
       "roleKey": "councillor_suplente",
@@ -8327,7 +8327,7 @@
       "level": "municipal",
       "listType": "suplente",
       "order": 3,
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -8338,7 +8338,7 @@
       "sourceExpediente": "276669/25"
     },
     {
-      "id": "nom-39e19a91c57c",
+      "id": "nom-7a213bc4f33e",
       "personId": "person-erica-adriana-breard",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -8346,7 +8346,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 4,
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -8357,7 +8357,7 @@
       "sourceExpediente": "276669/25"
     },
     {
-      "id": "nom-902fc1eb2b51",
+      "id": "nom-300aa76c580c",
       "personId": "person-diego-rene-lopez",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -8365,7 +8365,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 5,
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -8376,15 +8376,15 @@
       "sourceExpediente": "276669/25"
     },
     {
-      "id": "nom-048200dac5d1",
-      "personId": "person-raul-esteban-juarez",
+      "id": "nom-7853335be9e4",
+      "personId": "person-raul-esteban-l-juarez",
       "office": "Viceintendente",
       "roleKey": "vice_mayor",
       "branch": "Ejecutivo municipal",
       "level": "municipal",
       "listType": "titular",
       "order": 1,
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -8395,7 +8395,7 @@
       "sourceExpediente": "276669/25"
     },
     {
-      "id": "nom-350c1a7a977f",
+      "id": "nom-2eaacee65845",
       "personId": "person-raul-marcelo-fagundez",
       "office": "Intendente",
       "roleKey": "mayor",
@@ -8403,7 +8403,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 1,
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -10523,8 +10523,8 @@
       "sourceExpediente": null
     },
     {
-      "id": "nom-eb787232db27",
-      "personId": "person-dacil-mariana-a-gauna",
+      "id": "nom-45d022ec2a6a",
+      "personId": "person-dacil-mariana-gauna",
       "office": "Intendente",
       "roleKey": "mayor",
       "branch": "Ejecutivo municipal",
@@ -10542,8 +10542,8 @@
       "sourceExpediente": null
     },
     {
-      "id": "nom-401121dba1a2",
-      "personId": "person-diego-a-cespedes",
+      "id": "nom-682f0b72c0eb",
+      "personId": "person-diego-cespedes",
       "office": "Viceintendente",
       "roleKey": "vice_mayor",
       "branch": "Ejecutivo municipal",
@@ -11815,7 +11815,7 @@
       "sourceExpediente": "277068/25"
     },
     {
-      "id": "nom-cf97a5992bf8",
+      "id": "nom-16bd9aea6bc3",
       "personId": "person-angel-david-azame",
       "office": "Concejal suplente",
       "roleKey": "councillor_suplente",
@@ -11823,7 +11823,7 @@
       "level": "municipal",
       "listType": "suplente",
       "order": 1,
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -11834,7 +11834,7 @@
       "sourceExpediente": "276727/25"
     },
     {
-      "id": "nom-9db871fa3674",
+      "id": "nom-f2017e58c843",
       "personId": "person-manlio-escobar",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -11842,7 +11842,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 1,
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -11853,7 +11853,7 @@
       "sourceExpediente": "276727/25"
     },
     {
-      "id": "nom-aaab91ec138b",
+      "id": "nom-be309ea785f7",
       "personId": "person-andrea-soledad-rocuzzo",
       "office": "Concejal suplente",
       "roleKey": "councillor_suplente",
@@ -11861,7 +11861,7 @@
       "level": "municipal",
       "listType": "suplente",
       "order": 2,
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -11872,7 +11872,7 @@
       "sourceExpediente": "276727/25"
     },
     {
-      "id": "nom-22e3cd6cf1a4",
+      "id": "nom-33fae8f53369",
       "personId": "person-gabriela-silvana-villanueva",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -11880,7 +11880,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 2,
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -11891,7 +11891,7 @@
       "sourceExpediente": "276727/25"
     },
     {
-      "id": "nom-e4fcf6079b89",
+      "id": "nom-b332b34f4195",
       "personId": "person-matias-ezequiel-carmanola-encina",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -11899,7 +11899,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 3,
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -11910,7 +11910,7 @@
       "sourceExpediente": "276727/25"
     },
     {
-      "id": "nom-fbaf5cf9ff15",
+      "id": "nom-fe675acfbb33",
       "personId": "person-silvio-orlando-viera",
       "office": "Concejal suplente",
       "roleKey": "councillor_suplente",
@@ -11918,7 +11918,7 @@
       "level": "municipal",
       "listType": "suplente",
       "order": 3,
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -11929,7 +11929,7 @@
       "sourceExpediente": "276727/25"
     },
     {
-      "id": "nom-aaa01d4b977c",
+      "id": "nom-0542444f8e49",
       "personId": "person-debora-priscila-de-leon",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -11937,7 +11937,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 4,
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -11948,7 +11948,7 @@
       "sourceExpediente": "276727/25"
     },
     {
-      "id": "nom-910a162fc560",
+      "id": "nom-ae70f24826fa",
       "personId": "person-yolanda-aguirre",
       "office": "Concejal suplente",
       "roleKey": "councillor_suplente",
@@ -11956,7 +11956,7 @@
       "level": "municipal",
       "listType": "suplente",
       "order": 4,
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -11967,7 +11967,7 @@
       "sourceExpediente": "276727/25"
     },
     {
-      "id": "nom-04c95252124f",
+      "id": "nom-aaaa14488cdb",
       "personId": "person-ceferino-elizalde",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -11975,7 +11975,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 5,
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -11986,7 +11986,7 @@
       "sourceExpediente": "276727/25"
     },
     {
-      "id": "nom-ecee563e7fc2",
+      "id": "nom-d7a3af48a51a",
       "personId": "person-maria-de-los-angeles-rivero",
       "office": "Concejal titular",
       "roleKey": "councillor_titular",
@@ -11994,7 +11994,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 6,
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -12005,7 +12005,7 @@
       "sourceExpediente": "276727/25"
     },
     {
-      "id": "nom-d33ba8c944ad",
+      "id": "nom-00eb144eed41",
       "personId": "person-german-dario-zapata",
       "office": "Intendente",
       "roleKey": "mayor",
@@ -12013,7 +12013,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 1,
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -12024,7 +12024,7 @@
       "sourceExpediente": "276727/25"
     },
     {
-      "id": "nom-a7aa23c1ad4b",
+      "id": "nom-f8f79b042f01",
       "personId": "person-jose-ramon-berecoechea",
       "office": "Viceintendente",
       "roleKey": "vice_mayor",
@@ -12032,7 +12032,7 @@
       "level": "municipal",
       "listType": "titular",
       "order": 1,
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "allianceId": "org-lla-corrientes",
       "alliance": "La Libertad Avanza",
@@ -13375,34 +13375,6 @@
   ],
   "relationships": [
     {
-      "id": "rel-person-a-juan-jose-duarte-lla",
-      "from": "person-a-juan-jose-duarte",
-      "to": "org-lla-corrientes",
-      "type": "candidato_de",
-      "source": "derivado_de_candidatura_oficial"
-    },
-    {
-      "id": "rel-person-a-manuel-fernando-diaz-colodrero-lla",
-      "from": "person-a-manuel-fernando-diaz-colodrero",
-      "to": "org-lla-corrientes",
-      "type": "candidato_de",
-      "source": "derivado_de_candidatura_oficial"
-    },
-    {
-      "id": "rel-person-a-antonio-roman-obregon-lla",
-      "from": "person-a-antonio-roman-obregon",
-      "to": "org-lla-corrientes",
-      "type": "candidato_de",
-      "source": "derivado_de_candidatura_oficial"
-    },
-    {
-      "id": "rel-person-a-luciana-mabel-lopez-lla",
-      "from": "person-a-luciana-mabel-lopez",
-      "to": "org-lla-corrientes",
-      "type": "candidato_de",
-      "source": "derivado_de_candidatura_oficial"
-    },
-    {
       "id": "rel-person-abel-antonio-maciel-lla",
       "from": "person-abel-antonio-maciel",
       "to": "org-lla-corrientes",
@@ -13564,8 +13536,8 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-alicia-noemi-a-benitez-lla",
-      "from": "person-alicia-noemi-a-benitez",
+      "id": "rel-person-alicia-noemi-benitez-lla",
+      "from": "person-alicia-noemi-benitez",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
@@ -13662,6 +13634,13 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
+      "id": "rel-person-antonio-roman-obregon-lla",
+      "from": "person-antonio-roman-obregon",
+      "to": "org-lla-corrientes",
+      "type": "candidato_de",
+      "source": "derivado_de_candidatura_oficial"
+    },
+    {
       "id": "rel-person-antonio-zapata-lla",
       "from": "person-antonio-zapata",
       "to": "org-lla-corrientes",
@@ -13732,8 +13711,8 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-bernardo-damian-a-mino-lla",
-      "from": "person-bernardo-damian-a-mino",
+      "id": "rel-person-bernardo-damian-mino-lla",
+      "from": "person-bernardo-damian-mino",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
@@ -13991,8 +13970,8 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-dacil-mariana-a-gauna-lla",
-      "from": "person-dacil-mariana-a-gauna",
+      "id": "rel-person-dacil-mariana-gauna-lla",
+      "from": "person-dacil-mariana-gauna",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
@@ -14068,8 +14047,8 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-denis-ariel-a-gonzalez-lla",
-      "from": "person-denis-ariel-a-gonzalez",
+      "id": "rel-person-denis-ariel-gonzalez-lla",
+      "from": "person-denis-ariel-gonzalez",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
@@ -14082,8 +14061,8 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-diego-a-cespedes-lla",
-      "from": "person-diego-a-cespedes",
+      "id": "rel-person-diego-cespedes-lla",
+      "from": "person-diego-cespedes",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
@@ -14152,8 +14131,8 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-eleuterio-maximo-a-ojeda-lla",
-      "from": "person-eleuterio-maximo-a-ojeda",
+      "id": "rel-person-eleuterio-maximo-ojeda-lla",
+      "from": "person-eleuterio-maximo-ojeda",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
@@ -14530,8 +14509,8 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-gaston-hugo-a-boccalandro-lla",
-      "from": "person-gaston-hugo-a-boccalandro",
+      "id": "rel-person-gaston-hugo-boccalandro-lla",
+      "from": "person-gaston-hugo-boccalandro",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
@@ -15013,6 +14992,13 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
+      "id": "rel-person-juan-jose-duarte-lla",
+      "from": "person-juan-jose-duarte",
+      "to": "org-lla-corrientes",
+      "type": "candidato_de",
+      "source": "derivado_de_candidatura_oficial"
+    },
+    {
       "id": "rel-person-juan-manuel-gomez-lla",
       "from": "person-juan-manuel-gomez",
       "to": "org-lla-corrientes",
@@ -15132,15 +15118,15 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-leandro-gabriel-a-taborda-lla",
-      "from": "person-leandro-gabriel-a-taborda",
+      "id": "rel-person-leandro-gabriel-fellau-lla",
+      "from": "person-leandro-gabriel-fellau",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-leandro-gabriel-fellau-lla",
-      "from": "person-leandro-gabriel-fellau",
+      "id": "rel-person-leandro-gabriel-taborda-lla",
+      "from": "person-leandro-gabriel-taborda",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
@@ -15244,6 +15230,13 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
+      "id": "rel-person-luciana-mabel-lopez-lla",
+      "from": "person-luciana-mabel-lopez",
+      "to": "org-lla-corrientes",
+      "type": "candidato_de",
+      "source": "derivado_de_candidatura_oficial"
+    },
+    {
       "id": "rel-person-luciano-maximiliano-carrillo-lla",
       "from": "person-luciano-maximiliano-carrillo",
       "to": "org-lla-corrientes",
@@ -15328,6 +15321,13 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
+      "id": "rel-person-manuel-fernando-diaz-colodrero-lla",
+      "from": "person-manuel-fernando-diaz-colodrero",
+      "to": "org-lla-corrientes",
+      "type": "candidato_de",
+      "source": "derivado_de_candidatura_oficial"
+    },
+    {
       "id": "rel-person-marcelo-alejandro-maidana-lla",
       "from": "person-marcelo-alejandro-maidana",
       "to": "org-lla-corrientes",
@@ -15391,8 +15391,8 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-maria-gabriela-a-correa-lla",
-      "from": "person-maria-gabriela-a-correa",
+      "id": "rel-person-maria-gabriela-correa-lla",
+      "from": "person-maria-gabriela-correa",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
@@ -15580,8 +15580,8 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-mauricio-jose-a-silanes-guido-lla",
-      "from": "person-mauricio-jose-a-silanes-guido",
+      "id": "rel-person-mauricio-jose-silanes-guido-lla",
+      "from": "person-mauricio-jose-silanes-guido",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
@@ -15825,8 +15825,8 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-nelly-graciela-a-alvarez-rosciani-lla",
-      "from": "person-nelly-graciela-a-alvarez-rosciani",
+      "id": "rel-person-nelly-graciela-alvarez-rosciani-lla",
+      "from": "person-nelly-graciela-alvarez-rosciani",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
@@ -16007,8 +16007,8 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-paolo-cesar-a-claps-lla",
-      "from": "person-paolo-cesar-a-claps",
+      "id": "rel-person-paolo-cesar-claps-lla",
+      "from": "person-paolo-cesar-claps",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
@@ -16112,8 +16112,8 @@
       "source": "derivado_de_candidatura_oficial"
     },
     {
-      "id": "rel-person-raul-esteban-juarez-lla",
-      "from": "person-raul-esteban-juarez",
+      "id": "rel-person-raul-esteban-l-juarez-lla",
+      "from": "person-raul-esteban-l-juarez",
       "to": "org-lla-corrientes",
       "type": "candidato_de",
       "source": "derivado_de_candidatura_oficial"
@@ -16764,8 +16764,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/2-ALVEAR.pdf"
     },
     {
-      "id": "rel-nom-16de8873562f-list",
-      "from": "person-a-antonio-roman-obregon",
+      "id": "rel-nom-b99625d2531b-list",
+      "from": "person-antonio-roman-obregon",
       "to": "list-lla-alvear-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Viceintendente",
@@ -16773,8 +16773,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/2-ALVEAR.pdf"
     },
     {
-      "id": "rel-nom-da4f59020dd0-list",
-      "from": "person-a-luciana-mabel-lopez",
+      "id": "rel-nom-b4c24c216f4d-list",
+      "from": "person-luciana-mabel-lopez",
       "to": "list-lla-alvear-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Intendente",
@@ -16872,8 +16872,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/3-BELLA-VISTA.pdf"
     },
     {
-      "id": "rel-nom-e23b6beadc4a-list",
-      "from": "person-maria-gabriela-a-correa",
+      "id": "rel-nom-86d0bd5b4d93-list",
+      "from": "person-maria-gabriela-correa",
       "to": "list-lla-bella-vista-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Viceintendente",
@@ -16881,8 +16881,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/3-BELLA-VISTA.pdf"
     },
     {
-      "id": "rel-nom-f2b3292ea24b-list",
-      "from": "person-mauricio-jose-a-silanes-guido",
+      "id": "rel-nom-5a092a2b5f05-list",
+      "from": "person-mauricio-jose-silanes-guido",
       "to": "list-lla-bella-vista-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Intendente",
@@ -16926,8 +16926,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/5-BONPLAND.pdf"
     },
     {
-      "id": "rel-nom-c36fe24e7344-list",
-      "from": "person-bernardo-damian-a-mino",
+      "id": "rel-nom-19ed01b68095-list",
+      "from": "person-bernardo-damian-mino",
       "to": "list-lla-bonpland-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Intendente",
@@ -16935,8 +16935,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/5-BONPLAND.pdf"
     },
     {
-      "id": "rel-nom-0d54709c9b41-list",
-      "from": "person-leandro-gabriel-a-taborda",
+      "id": "rel-nom-ca0f2825177e-list",
+      "from": "person-leandro-gabriel-taborda",
       "to": "list-lla-bonpland-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Viceintendente",
@@ -16971,8 +16971,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/6-CAA-CATI.pdf"
     },
     {
-      "id": "rel-nom-6fe356ef9076-list",
-      "from": "person-nelly-graciela-a-alvarez-rosciani",
+      "id": "rel-nom-adcba8212326-list",
+      "from": "person-nelly-graciela-alvarez-rosciani",
       "to": "list-lla-caa-cati-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Intendente",
@@ -16980,8 +16980,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/6-CAA-CATI.pdf"
     },
     {
-      "id": "rel-nom-9ce59eddadd1-list",
-      "from": "person-paolo-cesar-a-claps",
+      "id": "rel-nom-61aa6c7f6cfc-list",
+      "from": "person-paolo-cesar-claps",
       "to": "list-lla-caa-cati-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Viceintendente",
@@ -17025,8 +17025,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/8-CAROLINA.pdf"
     },
     {
-      "id": "rel-nom-9fb068605b46-list",
-      "from": "person-a-juan-jose-duarte",
+      "id": "rel-nom-01a183f35202-list",
+      "from": "person-juan-jose-duarte",
       "to": "list-lla-carolina-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Viceintendente",
@@ -17034,8 +17034,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/8-CAROLINA.pdf"
     },
     {
-      "id": "rel-nom-a6ddbdfde5e0-list",
-      "from": "person-a-manuel-fernando-diaz-colodrero",
+      "id": "rel-nom-6386387564bf-list",
+      "from": "person-manuel-fernando-diaz-colodrero",
       "to": "list-lla-carolina-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Intendente",
@@ -17124,8 +17124,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/7-CARLOS-PELLEGRINI.pdf"
     },
     {
-      "id": "rel-nom-6200b3a975b7-list",
-      "from": "person-eleuterio-maximo-a-ojeda",
+      "id": "rel-nom-2d31c8410d1a-list",
+      "from": "person-eleuterio-maximo-ojeda",
       "to": "list-lla-colonia-carlos-pellegrini-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Viceintendente",
@@ -17133,8 +17133,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/7-CARLOS-PELLEGRINI.pdf"
     },
     {
-      "id": "rel-nom-0fe6e8255925-list",
-      "from": "person-gaston-hugo-a-boccalandro",
+      "id": "rel-nom-2ec244e8c67d-list",
+      "from": "person-gaston-hugo-boccalandro",
       "to": "list-lla-colonia-carlos-pellegrini-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Intendente",
@@ -17178,8 +17178,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/14-COLONIA-LIEBIG.pdf"
     },
     {
-      "id": "rel-nom-610e3a4b88d1-list",
-      "from": "person-alicia-noemi-a-benitez",
+      "id": "rel-nom-877805dc241b-list",
+      "from": "person-alicia-noemi-benitez",
       "to": "list-lla-colonia-liebig-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Intendente",
@@ -17187,8 +17187,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/14-COLONIA-LIEBIG.pdf"
     },
     {
-      "id": "rel-nom-686a397161dd-list",
-      "from": "person-denis-ariel-a-gonzalez",
+      "id": "rel-nom-e9a338439686-list",
+      "from": "person-denis-ariel-gonzalez",
       "to": "list-lla-colonia-liebig-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Viceintendente",
@@ -17817,7 +17817,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/21-ESTACION-TORRENT.pdf"
     },
     {
-      "id": "rel-nom-4073d51dc1fe-list",
+      "id": "rel-nom-458e2ebc461c-list",
       "from": "person-coussediere-walter-ricardo",
       "to": "list-lla-felipe-yofre-concejo-deliberante",
       "type": "integra_lista",
@@ -17826,7 +17826,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/22-FELIPE-YOFRE.pdf"
     },
     {
-      "id": "rel-nom-f6a5197a48a7-list",
+      "id": "rel-nom-fa09c5151efd-list",
       "from": "person-leiva-mara-elizabet",
       "to": "list-lla-felipe-yofre-concejo-deliberante",
       "type": "integra_lista",
@@ -17835,7 +17835,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/22-FELIPE-YOFRE.pdf"
     },
     {
-      "id": "rel-nom-037a02b39221-list",
+      "id": "rel-nom-0ccad37ead3f-list",
       "from": "person-gomez-centurion-maria-leticia",
       "to": "list-lla-felipe-yofre-concejo-deliberante",
       "type": "integra_lista",
@@ -17844,7 +17844,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/22-FELIPE-YOFRE.pdf"
     },
     {
-      "id": "rel-nom-e53b75965e63-list",
+      "id": "rel-nom-bd8bc76ae116-list",
       "from": "person-ramon-federico-buera",
       "to": "list-lla-felipe-yofre-concejo-deliberante",
       "type": "integra_lista",
@@ -17853,7 +17853,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/22-FELIPE-YOFRE.pdf"
     },
     {
-      "id": "rel-nom-53436409e30e-list",
+      "id": "rel-nom-f6b4df1bc43b-list",
       "from": "person-daiana-soledad-coussediere",
       "to": "list-lla-felipe-yofre-concejo-deliberante",
       "type": "integra_lista",
@@ -17862,7 +17862,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/22-FELIPE-YOFRE.pdf"
     },
     {
-      "id": "rel-nom-87adbd5f4dae-list",
+      "id": "rel-nom-9611b8043698-list",
       "from": "person-toledo-jonatan-nahuel",
       "to": "list-lla-felipe-yofre-concejo-deliberante",
       "type": "integra_lista",
@@ -17871,7 +17871,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/22-FELIPE-YOFRE.pdf"
     },
     {
-      "id": "rel-nom-061dd945ae75-list",
+      "id": "rel-nom-d3ca359c1e0c-list",
       "from": "person-benitez-diego-osvaldo",
       "to": "list-lla-felipe-yofre-ejecutivo-municipal",
       "type": "integra_lista",
@@ -17880,7 +17880,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/22-FELIPE-YOFRE.pdf"
     },
     {
-      "id": "rel-nom-08c90f65adf6-list",
+      "id": "rel-nom-2d7b98c22f04-list",
       "from": "person-federih-carlos-emilio",
       "to": "list-lla-felipe-yofre-ejecutivo-municipal",
       "type": "integra_lista",
@@ -18465,7 +18465,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/31-ITATI.pdf"
     },
     {
-      "id": "rel-nom-680101868559-list",
+      "id": "rel-nom-0489c05dbb79-list",
       "from": "person-jorge-alberto-almara",
       "to": "list-lla-ituzaingo-concejo-deliberante",
       "type": "integra_lista",
@@ -18474,7 +18474,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/32-ITUZAINGO.pdf"
     },
     {
-      "id": "rel-nom-98f711530c00-list",
+      "id": "rel-nom-23d422cecb48-list",
       "from": "person-margarita-de-los-santos",
       "to": "list-lla-ituzaingo-concejo-deliberante",
       "type": "integra_lista",
@@ -18483,7 +18483,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/32-ITUZAINGO.pdf"
     },
     {
-      "id": "rel-nom-d6b3726cf186-list",
+      "id": "rel-nom-bdf451e89451-list",
       "from": "person-gaston-martin-baez",
       "to": "list-lla-ituzaingo-concejo-deliberante",
       "type": "integra_lista",
@@ -18492,7 +18492,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/32-ITUZAINGO.pdf"
     },
     {
-      "id": "rel-nom-cfea71a5315f-list",
+      "id": "rel-nom-c98aacebd0ca-list",
       "from": "person-xiomara-damaris-soto",
       "to": "list-lla-ituzaingo-concejo-deliberante",
       "type": "integra_lista",
@@ -18501,7 +18501,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/32-ITUZAINGO.pdf"
     },
     {
-      "id": "rel-nom-0466cc93b4be-list",
+      "id": "rel-nom-33caacfd305f-list",
       "from": "person-alejandro-gabriel-ceferino-escudero",
       "to": "list-lla-ituzaingo-concejo-deliberante",
       "type": "integra_lista",
@@ -18510,7 +18510,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/32-ITUZAINGO.pdf"
     },
     {
-      "id": "rel-nom-3c25e12a3605-list",
+      "id": "rel-nom-8f4da0a06611-list",
       "from": "person-berta-torres",
       "to": "list-lla-ituzaingo-concejo-deliberante",
       "type": "integra_lista",
@@ -18519,7 +18519,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/32-ITUZAINGO.pdf"
     },
     {
-      "id": "rel-nom-39e19a91c57c-list",
+      "id": "rel-nom-7a213bc4f33e-list",
       "from": "person-erica-adriana-breard",
       "to": "list-lla-ituzaingo-concejo-deliberante",
       "type": "integra_lista",
@@ -18528,7 +18528,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/32-ITUZAINGO.pdf"
     },
     {
-      "id": "rel-nom-902fc1eb2b51-list",
+      "id": "rel-nom-300aa76c580c-list",
       "from": "person-diego-rene-lopez",
       "to": "list-lla-ituzaingo-concejo-deliberante",
       "type": "integra_lista",
@@ -18537,8 +18537,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/32-ITUZAINGO.pdf"
     },
     {
-      "id": "rel-nom-048200dac5d1-list",
-      "from": "person-raul-esteban-juarez",
+      "id": "rel-nom-7853335be9e4-list",
+      "from": "person-raul-esteban-l-juarez",
       "to": "list-lla-ituzaingo-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Viceintendente",
@@ -18546,7 +18546,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/32-ITUZAINGO.pdf"
     },
     {
-      "id": "rel-nom-350c1a7a977f-list",
+      "id": "rel-nom-2eaacee65845-list",
       "from": "person-raul-marcelo-fagundez",
       "to": "list-lla-ituzaingo-ejecutivo-municipal",
       "type": "integra_lista",
@@ -19554,8 +19554,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/4-BERON-DE-ASTRADA.pdf"
     },
     {
-      "id": "rel-nom-eb787232db27-list",
-      "from": "person-dacil-mariana-a-gauna",
+      "id": "rel-nom-45d022ec2a6a-list",
+      "from": "person-dacil-mariana-gauna",
       "to": "list-lla-san-antonio-de-itati-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Intendente",
@@ -19563,8 +19563,8 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/4-BERON-DE-ASTRADA.pdf"
     },
     {
-      "id": "rel-nom-401121dba1a2-list",
-      "from": "person-diego-a-cespedes",
+      "id": "rel-nom-682f0b72c0eb-list",
+      "from": "person-diego-cespedes",
       "to": "list-lla-san-antonio-de-itati-ejecutivo-municipal",
       "type": "integra_lista",
       "office": "Viceintendente",
@@ -20166,7 +20166,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/63-SANTA-LUCIA.pdf"
     },
     {
-      "id": "rel-nom-cf97a5992bf8-list",
+      "id": "rel-nom-16bd9aea6bc3-list",
       "from": "person-angel-david-azame",
       "to": "list-lla-santo-tome-concejo-deliberante",
       "type": "integra_lista",
@@ -20175,7 +20175,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/65-SANTO-TOME.pdf"
     },
     {
-      "id": "rel-nom-9db871fa3674-list",
+      "id": "rel-nom-f2017e58c843-list",
       "from": "person-manlio-escobar",
       "to": "list-lla-santo-tome-concejo-deliberante",
       "type": "integra_lista",
@@ -20184,7 +20184,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/65-SANTO-TOME.pdf"
     },
     {
-      "id": "rel-nom-aaab91ec138b-list",
+      "id": "rel-nom-be309ea785f7-list",
       "from": "person-andrea-soledad-rocuzzo",
       "to": "list-lla-santo-tome-concejo-deliberante",
       "type": "integra_lista",
@@ -20193,7 +20193,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/65-SANTO-TOME.pdf"
     },
     {
-      "id": "rel-nom-22e3cd6cf1a4-list",
+      "id": "rel-nom-33fae8f53369-list",
       "from": "person-gabriela-silvana-villanueva",
       "to": "list-lla-santo-tome-concejo-deliberante",
       "type": "integra_lista",
@@ -20202,7 +20202,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/65-SANTO-TOME.pdf"
     },
     {
-      "id": "rel-nom-e4fcf6079b89-list",
+      "id": "rel-nom-b332b34f4195-list",
       "from": "person-matias-ezequiel-carmanola-encina",
       "to": "list-lla-santo-tome-concejo-deliberante",
       "type": "integra_lista",
@@ -20211,7 +20211,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/65-SANTO-TOME.pdf"
     },
     {
-      "id": "rel-nom-fbaf5cf9ff15-list",
+      "id": "rel-nom-fe675acfbb33-list",
       "from": "person-silvio-orlando-viera",
       "to": "list-lla-santo-tome-concejo-deliberante",
       "type": "integra_lista",
@@ -20220,7 +20220,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/65-SANTO-TOME.pdf"
     },
     {
-      "id": "rel-nom-aaa01d4b977c-list",
+      "id": "rel-nom-0542444f8e49-list",
       "from": "person-debora-priscila-de-leon",
       "to": "list-lla-santo-tome-concejo-deliberante",
       "type": "integra_lista",
@@ -20229,7 +20229,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/65-SANTO-TOME.pdf"
     },
     {
-      "id": "rel-nom-910a162fc560-list",
+      "id": "rel-nom-ae70f24826fa-list",
       "from": "person-yolanda-aguirre",
       "to": "list-lla-santo-tome-concejo-deliberante",
       "type": "integra_lista",
@@ -20238,7 +20238,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/65-SANTO-TOME.pdf"
     },
     {
-      "id": "rel-nom-04c95252124f-list",
+      "id": "rel-nom-aaaa14488cdb-list",
       "from": "person-ceferino-elizalde",
       "to": "list-lla-santo-tome-concejo-deliberante",
       "type": "integra_lista",
@@ -20247,7 +20247,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/65-SANTO-TOME.pdf"
     },
     {
-      "id": "rel-nom-ecee563e7fc2-list",
+      "id": "rel-nom-d7a3af48a51a-list",
       "from": "person-maria-de-los-angeles-rivero",
       "to": "list-lla-santo-tome-concejo-deliberante",
       "type": "integra_lista",
@@ -20256,7 +20256,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/65-SANTO-TOME.pdf"
     },
     {
-      "id": "rel-nom-d33ba8c944ad-list",
+      "id": "rel-nom-00eb144eed41-list",
       "from": "person-german-dario-zapata",
       "to": "list-lla-santo-tome-ejecutivo-municipal",
       "type": "integra_lista",
@@ -20265,7 +20265,7 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/65-SANTO-TOME.pdf"
     },
     {
-      "id": "rel-nom-a7aa23c1ad4b-list",
+      "id": "rel-nom-f8f79b042f01-list",
       "from": "person-jose-ramon-berecoechea",
       "to": "list-lla-santo-tome-ejecutivo-municipal",
       "type": "integra_lista",
@@ -20904,45 +20904,45 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/0-PROVINCIA-1.pdf"
     },
     {
-      "id": "rel-formula-alvear-person-a-antonio-roman-obregon-person-a-luciana-mabel-lopez",
-      "from": "person-a-antonio-roman-obregon",
-      "to": "person-a-luciana-mabel-lopez",
+      "id": "rel-formula-alvear-person-antonio-roman-obregon-person-luciana-mabel-lopez",
+      "from": "person-antonio-roman-obregon",
+      "to": "person-luciana-mabel-lopez",
       "type": "integra_formula_con",
       "jurisdiction": "Alvear",
       "electionDate": "2025-08-31",
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/2-ALVEAR.pdf"
     },
     {
-      "id": "rel-formula-bella-vista-person-maria-gabriela-a-correa-person-mauricio-jose-a-silanes-guido",
-      "from": "person-maria-gabriela-a-correa",
-      "to": "person-mauricio-jose-a-silanes-guido",
+      "id": "rel-formula-bella-vista-person-maria-gabriela-correa-person-mauricio-jose-silanes-guido",
+      "from": "person-maria-gabriela-correa",
+      "to": "person-mauricio-jose-silanes-guido",
       "type": "integra_formula_con",
       "jurisdiction": "Bella Vista",
       "electionDate": "2025-08-31",
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/3-BELLA-VISTA.pdf"
     },
     {
-      "id": "rel-formula-bonpland-person-leandro-gabriel-a-taborda-person-bernardo-damian-a-mino",
-      "from": "person-leandro-gabriel-a-taborda",
-      "to": "person-bernardo-damian-a-mino",
+      "id": "rel-formula-bonpland-person-leandro-gabriel-taborda-person-bernardo-damian-mino",
+      "from": "person-leandro-gabriel-taborda",
+      "to": "person-bernardo-damian-mino",
       "type": "integra_formula_con",
       "jurisdiction": "Bonpland",
       "electionDate": "2025-08-31",
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/5-BONPLAND.pdf"
     },
     {
-      "id": "rel-formula-caa-cati-person-paolo-cesar-a-claps-person-nelly-graciela-a-alvarez-rosciani",
-      "from": "person-paolo-cesar-a-claps",
-      "to": "person-nelly-graciela-a-alvarez-rosciani",
+      "id": "rel-formula-caa-cati-person-paolo-cesar-claps-person-nelly-graciela-alvarez-rosciani",
+      "from": "person-paolo-cesar-claps",
+      "to": "person-nelly-graciela-alvarez-rosciani",
       "type": "integra_formula_con",
       "jurisdiction": "Caa Cati",
       "electionDate": "2025-08-31",
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/6-CAA-CATI.pdf"
     },
     {
-      "id": "rel-formula-carolina-person-a-juan-jose-duarte-person-a-manuel-fernando-diaz-colodrero",
-      "from": "person-a-juan-jose-duarte",
-      "to": "person-a-manuel-fernando-diaz-colodrero",
+      "id": "rel-formula-carolina-person-juan-jose-duarte-person-manuel-fernando-diaz-colodrero",
+      "from": "person-juan-jose-duarte",
+      "to": "person-manuel-fernando-diaz-colodrero",
       "type": "integra_formula_con",
       "jurisdiction": "Carolina",
       "electionDate": "2025-08-31",
@@ -20958,18 +20958,18 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/9-CAZADORES-CORRENTINOS.pdf"
     },
     {
-      "id": "rel-formula-colonia-carlos-pellegrini-person-eleuterio-maximo-a-ojeda-person-gaston-hugo-a-boccalandro",
-      "from": "person-eleuterio-maximo-a-ojeda",
-      "to": "person-gaston-hugo-a-boccalandro",
+      "id": "rel-formula-colonia-carlos-pellegrini-person-eleuterio-maximo-ojeda-person-gaston-hugo-boccalandro",
+      "from": "person-eleuterio-maximo-ojeda",
+      "to": "person-gaston-hugo-boccalandro",
       "type": "integra_formula_con",
       "jurisdiction": "Colonia Carlos Pellegrini",
       "electionDate": "2025-08-31",
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/7-CARLOS-PELLEGRINI.pdf"
     },
     {
-      "id": "rel-formula-colonia-liebig-person-denis-ariel-a-gonzalez-person-alicia-noemi-a-benitez",
-      "from": "person-denis-ariel-a-gonzalez",
-      "to": "person-alicia-noemi-a-benitez",
+      "id": "rel-formula-colonia-liebig-person-denis-ariel-gonzalez-person-alicia-noemi-benitez",
+      "from": "person-denis-ariel-gonzalez",
+      "to": "person-alicia-noemi-benitez",
       "type": "integra_formula_con",
       "jurisdiction": "Colonia Liebig",
       "electionDate": "2025-08-31",
@@ -21034,7 +21034,7 @@
       "from": "person-benitez-diego-osvaldo",
       "to": "person-federih-carlos-emilio",
       "type": "integra_formula_con",
-      "jurisdiction": "Felipe Yofre",
+      "jurisdiction": "Felipe Yofré",
       "electionDate": "2025-08-31",
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/22-FELIPE-YOFRE.pdf"
     },
@@ -21111,11 +21111,11 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/31-ITATI.pdf"
     },
     {
-      "id": "rel-formula-ituzaingo-person-raul-esteban-juarez-person-raul-marcelo-fagundez",
-      "from": "person-raul-esteban-juarez",
+      "id": "rel-formula-ituzaingo-person-raul-esteban-l-juarez-person-raul-marcelo-fagundez",
+      "from": "person-raul-esteban-l-juarez",
       "to": "person-raul-marcelo-fagundez",
       "type": "integra_formula_con",
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "electionDate": "2025-08-31",
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/32-ITUZAINGO.pdf"
     },
@@ -21282,9 +21282,9 @@
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/54-SAN-ANTONIO-APIPE-GRANDE.pdf"
     },
     {
-      "id": "rel-formula-san-antonio-de-itati-person-diego-a-cespedes-person-dacil-mariana-a-gauna",
-      "from": "person-diego-a-cespedes",
-      "to": "person-dacil-mariana-a-gauna",
+      "id": "rel-formula-san-antonio-de-itati-person-diego-cespedes-person-dacil-mariana-gauna",
+      "from": "person-diego-cespedes",
+      "to": "person-dacil-mariana-gauna",
       "type": "integra_formula_con",
       "jurisdiction": "San Antonio de Itatí",
       "electionDate": "2025-08-31",
@@ -21367,7 +21367,7 @@
       "from": "person-jose-ramon-berecoechea",
       "to": "person-german-dario-zapata",
       "type": "integra_formula_con",
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "source": "https://www.juscorrientes.gov.ar/wp-content/uploads/prensa/pdf/2025/65-SANTO-TOME.pdf"
     },
@@ -21613,7 +21613,7 @@
       "status": "lista_oficial_encontrada"
     },
     {
-      "jurisdiction": "Felipe Yofre",
+      "jurisdiction": "Felipe Yofré",
       "electionDate": "2025-08-31",
       "hasOfficialLLAList": true,
       "candidateCount": 8,
@@ -21693,7 +21693,7 @@
       "status": "lista_oficial_encontrada"
     },
     {
-      "jurisdiction": "Ituzaingo",
+      "jurisdiction": "Ituzaingó",
       "electionDate": "2025-08-31",
       "hasOfficialLLAList": true,
       "candidateCount": 10,
@@ -21957,7 +21957,7 @@
       "status": "lista_oficial_encontrada"
     },
     {
-      "jurisdiction": "Santo Tome",
+      "jurisdiction": "Santo Tomé",
       "electionDate": "2025-08-31",
       "hasOfficialLLAList": true,
       "candidateCount": 12,
@@ -22030,7 +22030,7 @@
     }
   ],
   "report": {
-    "generatedAt": "2026-07-25T02:21:59.313251+00:00",
+    "generatedAt": "2026-07-25T02:25:49.211924+00:00",
     "officialPage": "https://www.juscorrientes.gov.ar/prensa/el-juzgado-electoral-dio-a-conocer-la-lista-completa-de-candidatos-para-las-elecciones-del-31-de-agosto/",
     "municipalitiesReviewed": 74,
     "municipalitiesWithLLAList": 58,
