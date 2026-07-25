@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: corrientes-territorial-mcp
+    runtime: docker
+    dockerfilePath: ./chatgpt-app/Dockerfile
+    dockerContext: ./chatgpt-app
+    branch: chatgpt-mobile-app
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 8787
+      - key: PUBLIC_BASE_URL
+        sync: false
+      - key: DATA_BASE_URL
+        value: https://evacristo.github.io/vbn
