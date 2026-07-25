@@ -15,15 +15,37 @@ if '<link rel="stylesheet" href="results-suite.css?v=1">' not in html:
     if style_anchor not in html:
         raise SystemExit('Intelligence stylesheet anchor not found')
     html = html.replace(style_anchor, style_anchor + '\n<link rel="stylesheet" href="results-suite.css?v=1">')
-html = html.replace(
+
+for status in (
     'Mapa local · candidatos LLA 2025 incorporados',
-    'Escrutinio definitivo 2025 · resultados por lista y categoría',
-)
+    'Suite territorial · base LLA 2025 incorporada',
+):
+    html = html.replace(status, 'Escrutinio definitivo 2025 · resultados por lista y categoría')
+
 old_select = '<select id="contest"><option value="2023-runoff">Balotaje presidencial 2023 · LLA</option><option value="2025-deputies">Diputados nacionales 2025 · LLA</option><option value="2025-mayor">Intendencia 2025 · LLA</option></select>'
 new_select = '<select id="contest"><option value="2025-governor">Provinciales 2025 · Gobernador</option><option value="2025-senators">Provinciales 2025 · Senadores</option><option value="2025-deputies-provincial">Provinciales 2025 · Diputados</option><option value="2025-mayor">Municipales 2025 · Intendente</option><option value="2025-councillors">Municipales 2025 · Concejales</option></select>'
 if old_select not in html and new_select not in html:
     raise SystemExit('Expected map contest selector was not found')
 html = html.replace(old_select, new_select)
+
+legacy_results = "const results={'2023-runoff':{type:'department',rows:{'capital':64.22,'empedrado':50.47,'bella vista':46.51,'san martin':46.68,'saladas':41.34,'san miguel':31.85}},'2025-deputies':{type:'department',rows:{'capital':40.83}},'2025-mayor':{type:'municipality',rows:{'monte caseros':14.87}}};"
+if legacy_results in html:
+    html = html.replace(legacy_results, 'const results={};', 1)
+elif 'const results={};' not in html:
+    raise SystemExit('Legacy map result block was not found')
+
+legacy_state = "const state={level:'departments',contest:'2023-runoff'};"
+if legacy_state in html:
+    html = html.replace(legacy_state, "const state={level:'departments',contest:'2025-governor'};", 1)
+elif "const state={level:'departments',contest:'2025-governor'};" not in html:
+    raise SystemExit('Legacy map state was not found')
+
+legacy_norm = "const norm=s=>(s||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().trim();"
+verified_norm = "const norm=s=>(s||'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').replace(/\\s+/g,' ').trim();"
+if legacy_norm in html:
+    html = html.replace(legacy_norm, verified_norm, 1)
+elif verified_norm not in html:
+    raise SystemExit('Map normalizer fragment was not found')
 
 map_anchor = '<script src="map-routes.js?v=4"></script>'
 if '<script src="election-results-2025.js?v=1"></script>' not in html:
