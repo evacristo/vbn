@@ -21,7 +21,7 @@ jobs:
         continue-on-error: true
         run: |
           set -o pipefail
-          PYTHONPATH=. python tooling/extract_definitive_results_v2.py --out election-results-2025.json 2>&1 | tee extraction.log
+          PYTHONPATH=. python tooling/extract_definitive_results_v3.py --out election-results-2025.json 2>&1 | tee extraction.log
       - name: Validate extracted data
         if: steps.extraction.outcome == 'success'
         run: |
