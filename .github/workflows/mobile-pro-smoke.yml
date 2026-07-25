@@ -1,0 +1,116 @@
+name: Smoke test mobile pro
+
+on:
+  push:
+    branches: [chatgpt-mobile-app]
+  workflow_dispatch:
+
+jobs:
+  mobile-pro:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+      - name: Checkout published site
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm install @playwright/test
+          npx playwright install --with-deps chromium
+      - name: Create tests
+        run: |
+          cat > mobile-pro.spec.js <<'JS'
+          const { test, expect } = require('@playwright/test');
+          const devices = [
+            { name: 'phone', viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true },
+            { name: 'ipad', viewport: { width: 820, height: 1180 }, isMobile: true, hasTouch: true },
+          ];
+          for (const device of devices) {
+            test.describe(device.name, () => {
+              test.use(device);
+              test('complete pro workflow', async ({ page }) => {
+                const errors = [];
+                page.on('pageerror', error => errors.push(error.message));
+                await page.goto('http://127.0.0.1:8765/territorio-mobile-pro/index.html?fixture=1');
+                await page.getByLabel('Usuario').fill('Ivo');
+                await page.getByLabel('Contraseña').fill('Ivo');
+                await page.getByRole('button', { name: 'Entrar' }).click();
+                await expect(page.locator('#app')).toBeVisible();
+                await expect(page.locator('#dataHealthBadge')).toHaveText('Lista');
+
+                await page.locator('[data-target="map"]').click();
+                await expect(page.locator('#territoryMap .territory-path')).toHaveCount(2);
+
+                await page.locator('[data-target="people"]').click();
+                await page.locator('#peopleResults [data-person]').first().click();
+                await expect(page.locator('#crmPhone')).toBeVisible();
+                await page.locator('#crmPhone').fill('3794000000');
+                await page.locator('#crmStatus').selectOption('active');
+                await page.locator('#crmNextAction').fill('Coordinar reunión');
+                await page.locator('[data-save-crm]').click();
+                await page.locator('#sheetClose').click();
+
+                await page.locator('[data-target="field"]').click();
+                await page.locator('#visitTerritory').selectOption('Alvear');
+                await page.locator('#visitContacts').fill('Luciana López');
+                await page.locator('#visitIssues').fill('Falta organización barrial');
+                await page.locator('#visitCommitments').fill('Convocar equipo local');
+                await page.locator('#visitNextStep').fill('Reunión la próxima semana');
+                await page.locator('#visitForm button[type="submit"]').click();
+                await expect(page.locator('#visitList .list-card')).toHaveCount(1);
+
+                await page.locator('[data-target="more"]').click();
+                await page.locator('#view-more [data-open-view="alerts"]').click();
+                await expect(page.locator('#alertSummary article')).toHaveCount(4);
+
+                await page.locator('[data-target="more"]').click();
+                await page.locator('#view-more [data-open-view="reports"]').click();
+                await page.locator('#buildReport').click();
+                await expect(page.locator('#reportOutput')).toContainText('Resultados');
+
+                await page.locator('[data-target="more"]').click();
+                await page.locator('#view-more [data-open-view="import"]').click();
+                await page.locator('#pasteImport').fill('María Gómez 3794555555 referente Goya');
+                await page.locator('#parsePaste').click();
+                await expect(page.locator('#importPreview .list-card')).toHaveCount(1);
+                await page.locator('[data-approve-import]').click();
+                await expect(page.locator('#importPreview .list-card')).toHaveCount(0);
+
+                expect(errors).toEqual([]);
+              });
+            });
+          }
+          JS
+      - name: Start site
+        run: |
+          python3 -m http.server 8765 --directory site >/tmp/mobile-pro.log 2>&1 &
+          sleep 2
+      - name: Run tests
+        id: tests
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npx playwright test mobile-pro.spec.js --reporter=line 2>&1 | tee /tmp/mobile-pro-test.log
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-pro-diagnostics
+          path: |
+            /tmp/mobile-pro-test.log
+            /tmp/mobile-pro.log
+            test-results
+          if-no-files-found: ignore
+          retention-days: 3
+      - name: Fail after unsuccessful tests
+        if: steps.tests.outcome != 'success'
+        run: |
+          cat /tmp/mobile-pro-test.log || true
+          exit 1
