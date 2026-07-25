@@ -1,0 +1,62 @@
+name: Validate mobile next real data
+
+on:
+  push:
+    branches: [chatgpt-mobile-app]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  real-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          npm init -y
+          npm install @playwright/test
+          npx playwright install --with-deps chromium
+      - name: Create real-data test
+        run: |
+          cat > mobile-next-real.spec.js <<'JS'
+          const { test, expect } = require('@playwright/test');
+          const devices = [
+            { name: 'phone', viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true },
+            { name: 'ipad', viewport: { width: 820, height: 1180 }, isMobile: true, hasTouch: true },
+          ];
+          for (const device of devices) {
+            test.describe(device.name, () => {
+              test.use(device);
+              test('loads official database and real geometry', async ({ page }) => {
+                const errors = [];
+                page.on('pageerror', error => errors.push(error.message));
+                await page.goto('http://127.0.0.1:8765/territorio-mobile-next/index.html');
+                await page.getByLabel('Usuario').fill('Auditoria');
+                await page.getByLabel('Contraseña').fill('Auditoria');
+                await page.getByRole('button', { name: 'Entrar' }).click();
+                await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 30000 });
+                await expect(page.locator('#homeKpis article').first()).toContainText('470');
+                await page.locator('[data-target="map"]').click();
+                await expect(page.locator('#territoryMap .territory-path')).toHaveCount(25);
+                await page.locator('#mapLevel').selectOption('municipality');
+                await expect(page.locator('#territoryMap .territory-path')).toHaveCount(74);
+                await page.locator('[data-target="people"]').click();
+                await expect(page.locator('#peopleResults .list-card').first()).toBeVisible();
+                await page.locator('#peopleSearch').fill('Goya');
+                await expect(page.locator('#peopleResults .list-card').first()).toBeVisible();
+                expect(errors).toEqual([]);
+              });
+            });
+          }
+          JS
+      - run: |
+          python3 -m http.server 8765 --directory site >/tmp/mobile-next-real.log 2>&1 &
+          sleep 2
+      - run: npx playwright test mobile-next-real.spec.js --reporter=line
