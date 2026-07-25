@@ -124,6 +124,11 @@ jobs:
           assert html.count('results-suite.css?v=1') == 1
           assert 'Provinciales 2025 · Gobernador' in html
           assert 'Balotaje presidencial 2023 · LLA</option>' not in html
+          assert 'const results={};' in html
+          assert "const state={level:'departments',contest:'2025-governor'};" in html
+          assert "'2023-runoff'" not in html
+          assert "replace(/[^a-z0-9]+/g,' ')" in html
+          assert 'Escrutinio definitivo 2025 · resultados por lista y categoría' in html
           assert './mobile-v2.html?v=7' in (site / 'manifest-v2.webmanifest').read_text(encoding='utf-8')
           print(report)
           PY
