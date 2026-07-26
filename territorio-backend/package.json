@@ -5,12 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "check": "node --check src/index-v2.js",
+    "check": "node --check src/index-v2.js && node --check src/index-v3.js",
     "test:integration": "node scripts/integration-test.mjs",
     "deploy:worker": "wrangler deploy",
     "db:init:local": "wrangler d1 execute DB --local --file=schema-v2.sql --yes",
     "db:init:remote": "wrangler d1 execute DB --remote --file=schema-v2.sql --yes",
-    "deploy": "npm run deploy:worker && npm run db:init:remote"
+    "deploy": "npm run db:init:remote && npm run deploy:worker"
   },
   "cloudflare": {
     "bindings": {
@@ -21,7 +21,7 @@
         "description": "Bucket R2 privado para fotos y documentos adjuntos a visitas territoriales."
       },
       "BOOTSTRAP_SECRET": {
-        "description": "Elegí una frase larga y aleatoria. Se usa una sola vez para crear el primer administrador y no debe compartirse."
+        "description": "Frase larga y aleatoria utilizada una sola vez para crear el primer administrador."
       }
     }
   },
