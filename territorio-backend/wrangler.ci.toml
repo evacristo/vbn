@@ -1,8 +1,19 @@
 name = "corrientes-territorial-api-ci"
-main = "src/index-v2.js"
+main = "src/index.js"
 compatibility_date = "2026-07-01"
 workers_dev = true
 
 [vars]
-ALLOWED_ORIGIN = "https://evacristo.github.io"
+ALLOWED_ORIGIN = "https://evacristo.github.io,http://127.0.0.1:8765"
 SESSION_TTL_DAYS = "30"
+DEBUG = "true"
+BOOTSTRAP_SECRET = "integration-bootstrap-secret"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "corrientes-territorial-ci"
+database_id = "00000000-0000-0000-0000-000000000001"
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "corrientes-territorial-files-ci"
