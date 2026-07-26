@@ -1,0 +1,126 @@
+name: Validate mobile next real data
+
+on:
+  push:
+    branches: [chatgpt-mobile-app]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  real-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          npm init -y
+          npm install @playwright/test
+          npx playwright install --with-deps chromium
+      - name: Create real-data test
+        run: |
+          cat > mobile-real.spec.js <<'JS'
+          const { test, expect } = require('@playwright/test');
+          const devices = [
+            { name: 'phone', viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true },
+            { name: 'ipad', viewport: { width: 820, height: 1180 }, isMobile: true, hasTouch: true },
+          ];
+          const routes = ['territorio-mobile-next', 'territorio-mobile-pro'];
+
+          async function localLogin(page, username) {
+            await expect(page.locator('#loginView')).toBeVisible({ timeout: 15000 });
+            await page.locator('#loginUser').fill(username);
+            await page.locator('#loginPassword').fill(username);
+            await expect(page.locator('#loginUser')).toHaveValue(username);
+            await expect(page.locator('#loginPassword')).toHaveValue(username);
+            await page.locator('#loginForm button[type="submit"]').click();
+            await expect(page.locator('#app')).toBeVisible();
+          }
+
+          for (const route of routes) {
+            for (const device of devices) {
+              test.describe(`${route}-${device.name}`, () => {
+                test.use(device);
+                test('loads official database and real geometry', async ({ page }) => {
+                  test.setTimeout(90000);
+                  const errors = [];
+                  page.on('pageerror', error => errors.push(error.message));
+                  const entry = route === 'territorio-mobile-pro' ? 'launch.html' : 'index.html';
+                  await page.goto(`http://127.0.0.1:8765/${route}/${entry}`);
+                  await localLogin(page, 'Auditoria');
+                  await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 60000 });
+                  await expect(page.locator('#homeKpis article').first()).toContainText('470');
+                  await page.locator('[data-target="map"]').click();
+                  await expect(page.locator('#territoryMap .territory-path')).toHaveCount(25);
+                  await page.locator('#mapLevel').selectOption('municipality');
+                  await expect(page.locator('#territoryMap .territory-path')).toHaveCount(74);
+                  await page.locator('[data-target="people"]').click();
+                  await expect(page.locator('#peopleResults .list-card').first()).toBeVisible();
+                  await page.locator('#peopleSearch').fill('Goya');
+                  await expect(page.locator('#peopleResults .list-card').first()).toBeVisible();
+                  if (route === 'territorio-mobile-pro') {
+                    await page.locator('#peopleResults [data-person]').first().click();
+                    await expect(page.locator('#crmPhone')).toBeVisible();
+                    await page.locator('#sheetClose').click();
+                    await page.locator('[data-target="field"]').click();
+                    await expect(page.locator('#visitTerritory option')).toHaveCount(74);
+                    await expect(page.locator('#visitTerritory option', { hasText: 'Goya' })).toHaveCount(1);
+                  }
+                  expect(errors).toEqual([]);
+                });
+              });
+            }
+          }
+
+          test.describe('territorio-mobile-pro-offline', () => {
+            test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+            test('reopens official data without a network connection', async ({ page, context }) => {
+              test.setTimeout(120000);
+              const errors = [];
+              page.on('pageerror', error => errors.push(error.message));
+              await page.goto('http://127.0.0.1:8765/territorio-mobile-pro/launch.html');
+              await localLogin(page, 'Offline');
+              await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 60000 });
+              await page.evaluate(() => navigator.serviceWorker.ready);
+              await page.reload();
+              await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 60000 });
+              await context.setOffline(true);
+              await page.reload();
+              await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 60000 });
+              await expect(page.locator('#homeKpis article').first()).toContainText('470');
+              await context.setOffline(false);
+              expect(errors).toEqual([]);
+            });
+          });
+          JS
+      - run: |
+          python3 -m http.server 8765 --directory site >/tmp/mobile-real.log 2>&1 &
+          sleep 2
+      - name: Run real-data tests
+        id: tests
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npx playwright test mobile-real.spec.js --reporter=line 2>&1 | tee /tmp/mobile-real-test.log
+      - name: Upload real-data diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-real-diagnostics
+          path: |
+            /tmp/mobile-real-test.log
+            /tmp/mobile-real.log
+            test-results
+          if-no-files-found: ignore
+          retention-days: 3
+      - name: Fail after unsuccessful tests
+        if: steps.tests.outcome != 'success'
+        run: |
+          cat /tmp/mobile-real-test.log || true
+          exit 1

@@ -1,0 +1,38 @@
+name: Deploy territorial backend
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: territorio-production
+    defaults:
+      run:
+        working-directory: territorio-backend
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install
+      - name: Validate required secrets
+        env:
+          BOOTSTRAP_SECRET: ${{ secrets.TERRITORIO_BOOTSTRAP_SECRET }}
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN"
+          test -n "$CLOUDFLARE_ACCOUNT_ID"
+          test -n "$BOOTSTRAP_SECRET"
+      - run: npm run check
+      - name: Deploy Worker and provision D1/R2
+        run: npm run deploy
+      - name: Upload bootstrap secret
+        env:
+          BOOTSTRAP_SECRET: ${{ secrets.TERRITORIO_BOOTSTRAP_SECRET }}
+        run: printf '%s' "$BOOTSTRAP_SECRET" | npx wrangler secret put BOOTSTRAP_SECRET

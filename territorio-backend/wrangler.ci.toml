@@ -1,0 +1,8 @@
+name = "corrientes-territorial-api-ci"
+main = "src/worker.js"
+compatibility_date = "2026-07-26"
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGIN = "https://evacristo.github.io"
+SESSION_TTL_DAYS = "30"

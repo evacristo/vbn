@@ -1,0 +1,31 @@
+{
+  "name": "corrientes-territorial-backend",
+  "version": "0.3.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "check": "node --check src/index-v2.js && node --check src/index-v3.js && node --check src/worker.js",
+    "test:integration": "node scripts/integration-test.mjs",
+    "deploy:worker": "wrangler deploy",
+    "db:init:local": "wrangler d1 execute DB --local --file=schema-v2.sql --yes",
+    "db:init:remote": "wrangler d1 execute DB --remote --file=schema-v2.sql --yes",
+    "deploy": "npm run deploy:worker && npm run db:init:remote"
+  },
+  "cloudflare": {
+    "bindings": {
+      "DB": {
+        "description": "Base D1 privada para usuarios, sesiones, auditoría y el espacio territorial compartido."
+      },
+      "FILES": {
+        "description": "Bucket R2 privado para fotos y documentos adjuntos a visitas territoriales."
+      },
+      "BOOTSTRAP_SECRET": {
+        "description": "Frase larga y aleatoria utilizada una sola vez para crear el primer administrador."
+      }
+    }
+  },
+  "devDependencies": {
+    "wrangler": "^4.102.0"
+  }
+}

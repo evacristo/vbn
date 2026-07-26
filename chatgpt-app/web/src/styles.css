@@ -1,0 +1,146 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f5f3f7;
+  --surface: #ffffff;
+  --surface-muted: #eee9f2;
+  --ink: #172033;
+  --muted: #667085;
+  --line: #d8d2de;
+  --accent: #6f32a8;
+  --accent-soft: #efe6f6;
+  --map-empty: #e9edf3;
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+:root[data-theme="dark"] {
+  --bg: #111318;
+  --surface: #1a1d24;
+  --surface-muted: #252832;
+  --ink: #f5f7fa;
+  --muted: #aab2c0;
+  --line: #343845;
+  --accent: #c28be8;
+  --accent-soft: #32243d;
+  --map-empty: #313643;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { min-height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--ink); }
+button, input, select, textarea { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+
+.app-shell {
+  min-height: 100vh;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: max(12px, env(safe-area-inset-top)) 12px calc(84px + env(safe-area-inset-bottom));
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.eyebrow { color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .1em; }
+h1 { margin: 4px 0 3px; font-size: clamp(21px, 6vw, 31px); line-height: 1.08; }
+.topbar p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.4; }
+.icon-button {
+  min-width: 46px;
+  min-height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 22px;
+}
+
+.content { min-height: 320px; }
+.stack, .list { display: grid; gap: 10px; }
+.panel, .kpi-grid article, .list-row, .map-card, .empty-state {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.panel { padding: 15px; }
+.panel h2 { margin: 0 0 7px; font-size: 17px; }
+.panel p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+.kpi-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.kpi-grid article { padding: 13px; }
+.kpi-grid span { display: block; color: var(--muted); font-size: 11px; }
+.kpi-grid strong { display: block; margin-top: 3px; font-size: 23px; }
+
+.quick-actions { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 14px; }
+.quick-actions button, .list-row button {
+  min-height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 750;
+  padding: 10px 13px;
+}
+
+.map-card { overflow: hidden; }
+.map-card svg { display: block; width: 100%; min-height: 390px; background: var(--surface-muted); touch-action: manipulation; }
+.map-background { fill: var(--surface-muted); }
+.map-feature { stroke: color-mix(in srgb, var(--ink) 55%, transparent); stroke-width: .75; vector-effect: non-scaling-stroke; cursor: pointer; }
+.map-feature.selected { stroke: var(--ink); stroke-width: 3; }
+.map-detail { display: grid; gap: 2px; padding: 13px 15px; }
+.map-detail span { color: var(--muted); font-size: 13px; }
+
+.list-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 13px;
+}
+.list-row > div { min-width: 0; display: grid; gap: 4px; }
+.list-row strong, .list-row span { overflow-wrap: anywhere; }
+.list-row span { color: var(--muted); font-size: 12px; }
+.list-row button { flex: 0 0 auto; min-width: 72px; }
+.empty-state { padding: 28px 18px; text-align: center; color: var(--muted); line-height: 1.5; }
+
+.bottom-nav {
+  position: fixed;
+  z-index: 20;
+  left: 50%;
+  bottom: max(8px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: min(calc(100% - 20px), 620px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  padding: 6px;
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 12px 35px rgb(0 0 0 / .18);
+  backdrop-filter: blur(18px);
+}
+.bottom-nav button {
+  min-height: 48px;
+  border: 0;
+  border-radius: 13px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 750;
+}
+.bottom-nav button.active { background: var(--accent); color: white; }
+
+@media (min-width: 720px) {
+  .app-shell { padding-inline: 18px; }
+  .kpi-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .quick-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .map-card svg { min-height: 520px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; }
+}

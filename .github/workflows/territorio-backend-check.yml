@@ -1,0 +1,68 @@
+name: Check territorial sync backend
+
+on:
+  push:
+    branches: [chatgpt-mobile-app]
+    paths:
+      - 'territorio-backend/**'
+      - '.github/workflows/territorio-backend-check.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'territorio-backend/**'
+      - '.github/workflows/territorio-backend-check.yml'
+  workflow_dispatch:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: territorio-backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install
+      - run: npm run check
+      - name: Validate isolated Worker bundle
+        run: npx wrangler deploy --dry-run --config wrangler.ci.toml --outdir dist
+      - name: Validate production auto-provisioning config
+        run: npx wrangler deploy --dry-run --config wrangler.toml --outdir dist-production
+      - name: Verify shared database schema
+        run: |
+          python3 - <<'PY'
+          import sqlite3
+          from pathlib import Path
+          sql = Path('schema-v2.sql').read_text(encoding='utf-8')
+          db = sqlite3.connect(':memory:')
+          db.executescript(sql)
+          tables = {row[0] for row in db.execute("select name from sqlite_master where type='table'")}
+          required = {
+              'users', 'organizations', 'organization_members', 'sessions',
+              'organization_workspaces', 'organization_workspace_history',
+              'audit_log_v2', 'login_attempts', 'shared_file_metadata'
+          }
+          missing = required - tables
+          if missing:
+              raise SystemExit(f'Missing tables: {sorted(missing)}')
+          print('Schema OK:', ', '.join(sorted(required)))
+          PY
+      - name: Run local integration test
+        id: integration
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run test:integration 2>&1 | tee integration.log
+      - name: Upload backend diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: territorio-backend-integration-log
+          path: territorio-backend/integration.log
+          if-no-files-found: warn
+          retention-days: 3
+      - name: Fail after unsuccessful integration
+        if: steps.integration.outcome != 'success'
+        run: exit 1

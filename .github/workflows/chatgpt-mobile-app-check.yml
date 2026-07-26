@@ -1,0 +1,39 @@
+name: Check mobile ChatGPT app
+
+on:
+  push:
+    branches: [chatgpt-mobile-app]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: chatgpt-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install
+      - name: Build and typecheck
+        id: app_build
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee build.log
+      - name: Upload build diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chatgpt-mobile-build-log
+          path: chatgpt-app/build.log
+          if-no-files-found: warn
+          retention-days: 3
+      - name: Stop after failed app build
+        if: steps.app_build.outcome != 'success'
+        run: exit 1
+      - name: Build container
+        run: docker build -t corrientes-territorial-chatgpt-app .
