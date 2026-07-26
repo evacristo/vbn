@@ -2,7 +2,7 @@
   "name": "Corrientes Territorial Pro",
   "short_name": "Territorio Pro",
   "description": "Inteligencia política territorial mobile-first para Corrientes.",
-  "start_url": "./?source=installed",
+  "start_url": "./launch.html?source=installed-sync4",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f5f3f7",
