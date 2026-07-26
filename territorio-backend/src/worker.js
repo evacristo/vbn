@@ -1,4 +1,4 @@
-import application from './index-v2.js';
+import application from './index-v3.js';
 
 export default {
   async fetch(request, env, context) {
@@ -20,6 +20,7 @@ export default {
 function statusFor(code) {
   if (code === 'read_only' || code === 'forbidden') return 403;
   if (code === 'unauthorized') return 401;
+  if (code === 'too_many_attempts') return 429;
   if (code === 'file_too_large' || code === 'workspace_too_large' || code === 'request_too_large') return 413;
   if (code === 'revision_conflict' || code === 'last_admin_required' || code === 'cannot_deactivate_current_user') return 409;
   if (code.endsWith('_not_found')) return 404;
