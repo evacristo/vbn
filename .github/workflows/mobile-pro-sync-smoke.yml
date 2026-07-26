@@ -69,7 +69,7 @@ jobs:
                   } else if (path === '/api/sync/push') {
                     body = { ok: true, revision: 1 };
                   } else if (path === '/api/sessions') {
-                    body = { sessions: [{ id: 's1', deviceId: 'phone', current: true, createdAt: new Date().toISOString(), expiresAt: new Date(Date.now()+86400000).toISOString() }] };
+                    body = { sessions: [{ id: 's1', deviceId: device.name, current: true, createdAt: new Date().toISOString(), expiresAt: new Date(Date.now()+86400000).toISOString() }] };
                   } else if (path === '/api/history') {
                     body = { history: [] };
                   }
@@ -97,8 +97,9 @@ jobs:
                 await page.locator('#bootstrapPassword').fill('Ivo');
                 await page.locator('#bootstrapAdmin').click();
 
-                await expect(page.locator('#remoteAuthState')).toContainText('Ivo');
-                await expect(page.locator('#teamAdminConsole')).toContainText('Espacio compartido');
+                await expect(page.locator('#remoteAuthState')).toContainText('Ivo', { timeout: 15000 });
+                await expect(page.locator('#remoteAuthState')).toContainText('Corrientes Territorial', { timeout: 15000 });
+                await expect(page.locator('#teamAdminConsole')).toContainText('Espacio compartido', { timeout: 15000 });
                 await expect(page.locator('#teamAdminConsole')).toContainText('Usuarios y permisos');
                 await expect(page.locator('#teamAdminConsole')).toContainText('Sesiones y dispositivos');
                 await expect(page.locator('#bootstrapFields')).toHaveClass(/hidden/);
