@@ -74,6 +74,16 @@ CREATE TABLE IF NOT EXISTS audit_log_v2 (
 CREATE INDEX IF NOT EXISTS audit_v2_org_idx ON audit_log_v2(organization_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS audit_v2_user_idx ON audit_log_v2(user_id, created_at DESC);
 
+CREATE TABLE IF NOT EXISTS login_attempts (
+  id TEXT PRIMARY KEY,
+  username TEXT NOT NULL COLLATE NOCASE,
+  ip_hash TEXT,
+  success INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS login_attempts_username_idx ON login_attempts(username, created_at DESC);
+CREATE INDEX IF NOT EXISTS login_attempts_ip_idx ON login_attempts(ip_hash, created_at DESC);
+
 CREATE TABLE IF NOT EXISTS shared_file_metadata (
   id TEXT PRIMARY KEY,
   organization_id TEXT NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
