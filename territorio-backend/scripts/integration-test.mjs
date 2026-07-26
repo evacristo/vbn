@@ -37,6 +37,15 @@ function authHeaders(token, extra = {}) {
   return { Authorization: `Bearer ${token}`, ...extra };
 }
 
+function stopWorker(worker, signal) {
+  try {
+    if (process.platform !== 'win32' && worker.pid) process.kill(-worker.pid, signal);
+    else worker.kill(signal);
+  } catch {
+    // It may already be stopped.
+  }
+}
+
 rmSync(persistPath, { recursive: true, force: true });
 
 const init = spawnSync(npx, [
@@ -49,7 +58,11 @@ assert(init.status === 0, 'Local D1 initialization failed.');
 const worker = spawn(npx, [
   'wrangler', 'dev', '--config', 'wrangler.test.toml', '--local',
   '--port', String(port), '--persist-to', persistPath, '--log-level', 'error',
-], { stdio: ['ignore', 'pipe', 'pipe'], shell: false });
+], {
+  stdio: ['ignore', 'pipe', 'pipe'],
+  shell: false,
+  detached: process.platform !== 'win32',
+});
 
 let workerOutput = '';
 worker.stdout.on('data', (chunk) => { workerOutput += chunk.toString(); });
@@ -241,8 +254,11 @@ try {
 
   console.log('Backend v3 integration passed: team sync, roles, files, history, sessions, password reset, audit, organization and login throttling.');
 } finally {
-  worker.kill('SIGTERM');
-  await new Promise((resolve) => setTimeout(resolve, 300));
-  if (worker.exitCode == null) worker.kill('SIGKILL');
+  stopWorker(worker, 'SIGTERM');
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  if (worker.exitCode == null) stopWorker(worker, 'SIGKILL');
+  worker.stdout.destroy();
+  worker.stderr.destroy();
+  worker.unref();
   if (process.exitCode && workerOutput) console.error(workerOutput);
 }
