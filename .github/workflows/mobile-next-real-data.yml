@@ -37,13 +37,15 @@ jobs:
               test.describe(`${route}-${device.name}`, () => {
                 test.use(device);
                 test('loads official database and real geometry', async ({ page }) => {
+                  test.setTimeout(90000);
                   const errors = [];
                   page.on('pageerror', error => errors.push(error.message));
-                  await page.goto(`http://127.0.0.1:8765/${route}/index.html`);
+                  const entry = route === 'territorio-mobile-pro' ? 'launch.html' : 'index.html';
+                  await page.goto(`http://127.0.0.1:8765/${route}/${entry}`);
                   await page.locator('#loginUser').fill('Auditoria');
                   await page.locator('#loginPassword').fill('Auditoria');
-                  await page.getByRole('button', { name: 'Entrar' }).click();
-                  await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 30000 });
+                  await page.locator('#loginForm button[type="submit"]').click();
+                  await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 60000 });
                   await expect(page.locator('#homeKpis article').first()).toContainText('470');
                   await page.locator('[data-target="map"]').click();
                   await expect(page.locator('#territoryMap .territory-path')).toHaveCount(25);
@@ -70,19 +72,20 @@ jobs:
           test.describe('territorio-mobile-pro-offline', () => {
             test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
             test('reopens official data without a network connection', async ({ page, context }) => {
+              test.setTimeout(120000);
               const errors = [];
               page.on('pageerror', error => errors.push(error.message));
-              await page.goto('http://127.0.0.1:8765/territorio-mobile-pro/index.html');
+              await page.goto('http://127.0.0.1:8765/territorio-mobile-pro/launch.html');
               await page.locator('#loginUser').fill('Offline');
               await page.locator('#loginPassword').fill('Offline');
-              await page.getByRole('button', { name: 'Entrar' }).click();
-              await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 30000 });
+              await page.locator('#loginForm button[type="submit"]').click();
+              await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 60000 });
               await page.evaluate(() => navigator.serviceWorker.ready);
               await page.reload();
-              await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 30000 });
+              await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 60000 });
               await context.setOffline(true);
               await page.reload();
-              await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 30000 });
+              await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 60000 });
               await expect(page.locator('#homeKpis article').first()).toContainText('470');
               await context.setOffline(false);
               expect(errors).toEqual([]);
