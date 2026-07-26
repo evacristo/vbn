@@ -23,8 +23,8 @@ async function request(path, options = {}) {
 async function waitForHealth() {
   for (let attempt = 0; attempt < 80; attempt += 1) {
     try {
-      const { response } = await request('/health');
-      if (response.ok) return;
+      const result = await request('/health');
+      if (result.response.ok) return result.data;
     } catch {
       // Worker is still starting.
     }
@@ -56,7 +56,9 @@ worker.stdout.on('data', (chunk) => { workerOutput += chunk.toString(); });
 worker.stderr.on('data', (chunk) => { workerOutput += chunk.toString(); });
 
 try {
-  await waitForHealth();
+  const health = await waitForHealth();
+  assert(health.version === '0.3.0', `Unexpected API version: ${health.version}`);
+  assert(health.capabilities?.includes('audit'), 'Hardened capabilities are missing.');
 
   const bootstrap = await request('/api/admin/users', {
     method: 'POST',
@@ -73,7 +75,9 @@ try {
   assert(adminLogin.response.ok && adminLogin.data.token, 'Admin login failed.');
   const adminToken = adminLogin.data.token;
   assert(adminLogin.data.organization?.name === 'Territorio Test', 'Organization was not returned on login.');
+  assert(adminLogin.response.headers.get('x-content-type-options') === 'nosniff', 'Security headers are missing.');
 
+  const createdUsers = {};
   for (const user of [
     { username: 'Editor', password: 'Editor', role: 'editor' },
     { username: 'Viewer', password: 'Viewer', role: 'viewer' },
@@ -84,7 +88,18 @@ try {
       body: JSON.stringify(user),
     });
     assert(created.response.status === 201, `Could not create ${user.username}: ${JSON.stringify(created.data)}`);
+    createdUsers[user.username] = created.data.user;
   }
+
+  const organization = await request('/api/organization', { headers: authHeaders(adminToken) });
+  assert(organization.response.ok && organization.data.organization.activeMembers === 3, 'Organization summary is incorrect.');
+
+  const renamed = await request('/api/organization', {
+    method: 'POST',
+    headers: authHeaders(adminToken, { 'Content-Type': 'application/json' }),
+    body: JSON.stringify({ name: 'Territorio Corrientes Test' }),
+  });
+  assert(renamed.response.ok && renamed.data.organization.name === 'Territorio Corrientes Test', 'Organization rename failed.');
 
   const editorLogin = await request('/api/login', {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -163,6 +178,25 @@ try {
   const viewer = users.data.users.find((item) => item.username === 'Viewer');
   assert(viewer, 'Viewer account missing from user list.');
 
+  const reset = await request(`/api/admin/users/${encodeURIComponent(createdUsers.Editor.id)}/password`, {
+    method: 'POST',
+    headers: authHeaders(adminToken, { 'Content-Type': 'application/json' }),
+    body: JSON.stringify({ password: 'EditorNueva' }),
+  });
+  assert(reset.response.ok && reset.data.sessionsRevoked, 'Password reset failed.');
+
+  const oldEditorLogin = await request('/api/login', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: 'Editor', password: 'Editor' }),
+  });
+  assert(oldEditorLogin.response.status === 401, 'Old editor password still works.');
+
+  const newEditorLogin = await request('/api/login', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: 'Editor', password: 'EditorNueva', deviceId: 'editor-phone-2' }),
+  });
+  assert(newEditorLogin.response.ok, 'New editor password does not work.');
+
   const disabled = await request(`/api/admin/users/${encodeURIComponent(viewer.id)}`, {
     method: 'PATCH', headers: authHeaders(adminToken, { 'Content-Type': 'application/json' }),
     body: JSON.stringify({ active: false }),
@@ -178,7 +212,24 @@ try {
   const sessions = await request('/api/sessions', { headers: authHeaders(adminToken) });
   assert(sessions.response.ok && sessions.data.sessions.some((item) => item.current), 'Current session not listed.');
 
-  console.log('Backend integration passed: users, roles, shared sync, conflicts, history, sessions and files.');
+  const audit = await request('/api/audit?limit=100', { headers: authHeaders(adminToken) });
+  assert(audit.response.ok && audit.data.audit.some((item) => item.action === 'password_reset'), 'Audit log does not contain password reset.');
+  assert(audit.data.audit.some((item) => item.action === 'organization_updated'), 'Audit log does not contain organization update.');
+
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    const invalid = await request('/api/login', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: 'Bloqueado', password: `incorrecta-${attempt}` }),
+    });
+    assert(invalid.response.status === 401, `Unexpected invalid-login status at attempt ${attempt + 1}.`);
+  }
+  const blocked = await request('/api/login', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: 'Bloqueado', password: 'otra' }),
+  });
+  assert(blocked.response.status === 429 && blocked.data.error === 'too_many_attempts', 'Login throttling failed.');
+
+  console.log('Backend v3 integration passed: team sync, roles, files, history, sessions, password reset, audit, organization and login throttling.');
 } finally {
   worker.kill('SIGTERM');
   await new Promise((resolve) => setTimeout(resolve, 300));
