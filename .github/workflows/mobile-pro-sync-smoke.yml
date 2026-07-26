@@ -112,15 +112,23 @@ jobs:
           python3 -m http.server 8765 --directory site >/tmp/mobile-pro-sync.log 2>&1 &
           sleep 2
       - name: Run activation tests
-        run: npx playwright test mobile-pro-sync.spec.js --reporter=line
+        id: activation
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npx playwright test mobile-pro-sync.spec.js --reporter=line 2>&1 | tee /tmp/mobile-pro-sync-test.log
       - name: Upload diagnostics
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-pro-sync-failure
+          name: mobile-pro-sync-diagnostics
           path: |
+            /tmp/mobile-pro-sync-test.log
+            /tmp/mobile-pro-sync.log
             test-results
             playwright-report
-            /tmp/mobile-pro-sync.log
           if-no-files-found: ignore
           retention-days: 3
+      - name: Fail after unsuccessful activation
+        if: steps.activation.outcome != 'success'
+        run: exit 1
