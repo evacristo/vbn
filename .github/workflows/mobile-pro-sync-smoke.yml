@@ -74,9 +74,9 @@ jobs:
                 });
 
                 await page.goto('http://127.0.0.1:8765/territorio-mobile-pro/launch.html?fixture=1');
-                await page.getByLabel('Usuario').fill('Ivo');
-                await page.getByLabel('Contraseña').fill('Ivo');
-                await page.getByRole('button', { name: 'Entrar' }).click();
+                await page.locator('#loginUser').fill('Ivo');
+                await page.locator('#loginPassword').fill('Ivo');
+                await page.locator('#loginForm button[type="submit"]').click();
                 await expect(page.locator('#app')).toBeVisible();
 
                 await page.locator('[data-target="more"]').click();
