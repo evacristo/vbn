@@ -40,7 +40,7 @@ jobs:
           required = {
               'users', 'organizations', 'organization_members', 'sessions',
               'organization_workspaces', 'organization_workspace_history',
-              'audit_log_v2', 'shared_file_metadata'
+              'audit_log_v2', 'login_attempts', 'shared_file_metadata'
           }
           missing = required - tables
           if missing:
