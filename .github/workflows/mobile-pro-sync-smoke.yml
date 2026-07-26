@@ -50,16 +50,20 @@ jobs:
                   let body = { ok: true };
                   let status = 200;
 
-                  if (path === '/health') body = { ok: true, version: '0.2.0' };
+                  if (path === '/health') body = { ok: true, version: '0.3.0' };
                   else if (path === '/api/admin/users' && request.method() === 'POST') {
                     status = 201;
                     body = { user: { id: 'u1', username: 'Ivo', role: 'admin', active: true }, organization: { id: 'o1', name: 'Corrientes Territorial' } };
                   } else if (path === '/api/admin/users') {
-                    body = { users: [{ id: 'u1', username: 'Ivo', role: 'admin', active: true, lastLoginAt: new Date().toISOString() }] };
+                    body = { users: [{ id: 'u1', username: 'Ivo', role: 'admin', active: true, activeSessions: 1, lastLoginAt: new Date().toISOString() }] };
                   } else if (path === '/api/login') {
                     body = { token: 'test-token', user: { id: 'u1', username: 'Ivo', role: 'admin', active: true }, organization: { id: 'o1', name: 'Corrientes Territorial' } };
                   } else if (path === '/api/me') {
                     body = { user: { id: 'u1', username: 'Ivo', role: 'admin', active: true }, organization: { id: 'o1', name: 'Corrientes Territorial' }, session: { id: 's1' } };
+                  } else if (path === '/api/organization') {
+                    body = { organization: { id: 'o1', name: 'Corrientes Territorial', activeMembers: 1 } };
+                  } else if (path === '/api/audit') {
+                    body = { audit: [{ id: 'a1', username: 'Ivo', action: 'login_success', detail: {}, createdAt: new Date().toISOString() }] };
                   } else if (path === '/api/sync/pull') {
                     body = { revision: 0, workspace: { version: 3, relations: [], agenda: [], visits: [], customPeople: [], importHistory: [], deletedRecords: [], personProfiles: {}, personNotes: {}, personTags: {}, territoryNotes: {}, territoryTags: {}, territoryMeta: {}, sourceReviews: {} } };
                   } else if (path === '/api/sync/push') {
@@ -94,7 +98,9 @@ jobs:
                 await page.locator('#bootstrapAdmin').click();
 
                 await expect(page.locator('#remoteAuthState')).toContainText('Ivo');
-                await expect(page.locator('#collabIdentity')).toContainText('Corrientes Territorial');
+                await expect(page.locator('#teamAdminConsole')).toContainText('Espacio compartido');
+                await expect(page.locator('#teamAdminConsole')).toContainText('Usuarios y permisos');
+                await expect(page.locator('#teamAdminConsole')).toContainText('Sesiones y dispositivos');
                 await expect(page.locator('#bootstrapFields')).toHaveClass(/hidden/);
                 expect(errors).toEqual([]);
               });
