@@ -1,17 +1,19 @@
 name = "corrientes-territorial-api"
 main = "src/index-v2.js"
-compatibility_date = "2026-07-01"
+compatibility_date = "2026-07-26"
 workers_dev = true
 
 [vars]
 ALLOWED_ORIGIN = "https://evacristo.github.io"
 SESSION_TTL_DAYS = "30"
 
+[observability]
+enabled = true
+
+# Cloudflare automatically provisions these resources during one-click deployment.
 [[d1_databases]]
 binding = "DB"
 database_name = "corrientes-territorial"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
 
 [[r2_buckets]]
 binding = "FILES"
-bucket_name = "corrientes-territorial-files"
