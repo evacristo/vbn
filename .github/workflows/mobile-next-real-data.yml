@@ -32,6 +32,17 @@ jobs:
             { name: 'ipad', viewport: { width: 820, height: 1180 }, isMobile: true, hasTouch: true },
           ];
           const routes = ['territorio-mobile-next', 'territorio-mobile-pro'];
+
+          async function localLogin(page, username) {
+            await expect(page.locator('#loginView')).toBeVisible({ timeout: 15000 });
+            await page.locator('#loginUser').fill(username);
+            await page.locator('#loginPassword').fill(username);
+            await expect(page.locator('#loginUser')).toHaveValue(username);
+            await expect(page.locator('#loginPassword')).toHaveValue(username);
+            await page.locator('#loginForm button[type="submit"]').click();
+            await expect(page.locator('#app')).toBeVisible();
+          }
+
           for (const route of routes) {
             for (const device of devices) {
               test.describe(`${route}-${device.name}`, () => {
@@ -42,9 +53,7 @@ jobs:
                   page.on('pageerror', error => errors.push(error.message));
                   const entry = route === 'territorio-mobile-pro' ? 'launch.html' : 'index.html';
                   await page.goto(`http://127.0.0.1:8765/${route}/${entry}`);
-                  await page.locator('#loginUser').fill('Auditoria');
-                  await page.locator('#loginPassword').fill('Auditoria');
-                  await page.locator('#loginForm button[type="submit"]').click();
+                  await localLogin(page, 'Auditoria');
                   await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 60000 });
                   await expect(page.locator('#homeKpis article').first()).toContainText('470');
                   await page.locator('[data-target="map"]').click();
@@ -76,9 +85,7 @@ jobs:
               const errors = [];
               page.on('pageerror', error => errors.push(error.message));
               await page.goto('http://127.0.0.1:8765/territorio-mobile-pro/launch.html');
-              await page.locator('#loginUser').fill('Offline');
-              await page.locator('#loginPassword').fill('Offline');
-              await page.locator('#loginForm button[type="submit"]').click();
+              await localLogin(page, 'Offline');
               await expect(page.locator('#dataHealthBadge')).toHaveText('Lista', { timeout: 60000 });
               await page.evaluate(() => navigator.serviceWorker.ready);
               await page.reload();
