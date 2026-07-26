@@ -1,0 +1,120 @@
+name: Smoke test Mobile Pro sync activation
+
+on:
+  push:
+    branches: [chatgpt-mobile-app]
+    paths:
+      - '.github/workflows/mobile-pro-sync-smoke.yml'
+      - 'territorio-backend/**'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  mobile-pro-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm install @playwright/test
+          npx playwright install --with-deps chromium
+      - name: Create activation test
+        run: |
+          cat > mobile-pro-sync.spec.js <<'JS'
+          const { test, expect } = require('@playwright/test');
+
+          const devices = [
+            { name: 'phone', viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true },
+            { name: 'ipad', viewport: { width: 820, height: 1180 }, isMobile: true, hasTouch: true },
+          ];
+
+          for (const device of devices) {
+            test.describe(device.name, () => {
+              test.use(device);
+              test('activates mocked private backend from the mobile UI', async ({ page }) => {
+                const errors = [];
+                page.on('pageerror', error => errors.push(error.message));
+
+                await page.route('https://api.example.test/**', async route => {
+                  const request = route.request();
+                  const path = new URL(request.url()).pathname;
+                  let body = { ok: true };
+                  let status = 200;
+
+                  if (path === '/health') body = { ok: true, version: '0.2.0' };
+                  else if (path === '/api/admin/users' && request.method() === 'POST') {
+                    status = 201;
+                    body = { user: { id: 'u1', username: 'Ivo', role: 'admin', active: true }, organization: { id: 'o1', name: 'Corrientes Territorial' } };
+                  } else if (path === '/api/admin/users') {
+                    body = { users: [{ id: 'u1', username: 'Ivo', role: 'admin', active: true, lastLoginAt: new Date().toISOString() }] };
+                  } else if (path === '/api/login') {
+                    body = { token: 'test-token', user: { id: 'u1', username: 'Ivo', role: 'admin', active: true }, organization: { id: 'o1', name: 'Corrientes Territorial' } };
+                  } else if (path === '/api/me') {
+                    body = { user: { id: 'u1', username: 'Ivo', role: 'admin', active: true }, organization: { id: 'o1', name: 'Corrientes Territorial' }, session: { id: 's1' } };
+                  } else if (path === '/api/sync/pull') {
+                    body = { revision: 0, workspace: { version: 3, relations: [], agenda: [], visits: [], customPeople: [], importHistory: [], deletedRecords: [], personProfiles: {}, personNotes: {}, personTags: {}, territoryNotes: {}, territoryTags: {}, territoryMeta: {}, sourceReviews: {} } };
+                  } else if (path === '/api/sync/push') {
+                    body = { ok: true, revision: 1 };
+                  } else if (path === '/api/sessions') {
+                    body = { sessions: [{ id: 's1', deviceId: 'phone', current: true, createdAt: new Date().toISOString(), expiresAt: new Date(Date.now()+86400000).toISOString() }] };
+                  } else if (path === '/api/history') {
+                    body = { history: [] };
+                  }
+
+                  await route.fulfill({ status, contentType: 'application/json', body: JSON.stringify(body) });
+                });
+
+                await page.goto('http://127.0.0.1:8765/territorio-mobile-pro/launch.html?fixture=1');
+                await page.getByLabel('Usuario').fill('Ivo');
+                await page.getByLabel('Contraseña').fill('Ivo');
+                await page.getByRole('button', { name: 'Entrar' }).click();
+                await expect(page.locator('#app')).toBeVisible();
+
+                await page.locator('[data-target="more"]').click();
+                await page.locator('#view-more [data-open-view="sync"]').click();
+                await expect(page.locator('#backendSetupPanel')).toBeVisible();
+                await expect(page.getByRole('button', { name: /Desplegar en Cloudflare/ })).toBeVisible();
+
+                await page.locator('#setupEndpoint').fill('https://api.example.test');
+                await page.locator('#testSetupEndpoint').click();
+                await expect(page.locator('#setupHealthStatus')).toContainText('Servicio disponible');
+
+                await page.locator('#bootstrapSecret').fill('test-bootstrap-secret');
+                await page.locator('#bootstrapUsername').fill('Ivo');
+                await page.locator('#bootstrapPassword').fill('Ivo');
+                await page.locator('#bootstrapAdmin').click();
+
+                await expect(page.locator('#remoteAuthState')).toContainText('Ivo');
+                await expect(page.locator('#collabIdentity')).toContainText('Corrientes Territorial');
+                await expect(page.locator('#bootstrapFields')).toHaveClass(/hidden/);
+                expect(errors).toEqual([]);
+              });
+            });
+          }
+          JS
+      - name: Start static server
+        run: |
+          python3 -m http.server 8765 --directory site >/tmp/mobile-pro-sync.log 2>&1 &
+          sleep 2
+      - name: Run activation tests
+        run: npx playwright test mobile-pro-sync.spec.js --reporter=line
+      - name: Upload diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-pro-sync-failure
+          path: |
+            test-results
+            playwright-report
+            /tmp/mobile-pro-sync.log
+          if-no-files-found: ignore
+          retention-days: 3
