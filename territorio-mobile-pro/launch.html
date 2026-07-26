@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#6f32a8">
+  <title>Abriendo Corrientes Territorial Pro</title>
+  <style>html,body{height:100%;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f3f7;color:#172033}main{height:100%;display:grid;place-items:center;text-align:center;padding:24px;box-sizing:border-box}.spinner{width:34px;height:34px;border:4px solid #ded7e4;border-top-color:#6f32a8;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}@keyframes spin{to{transform:rotate(360deg)}}button{min-height:48px;border:0;border-radius:14px;padding:12px 18px;background:#6f32a8;color:white;font-weight:700}</style>
+</head>
+<body>
+<main><div><div class="spinner"></div><h1>Corrientes Territorial</h1><p id="status">Cargando la versión profesional…</p><button id="retry" hidden>Reintentar</button></div></main>
+<script>
+(function(){
+  var build='20260726-sync3';
+  function load(){
+    document.getElementById('retry').hidden=true;
+    document.getElementById('status').textContent='Cargando la versión profesional…';
+    fetch('index.html?source='+build,{cache:'no-store'}).then(function(response){if(!response.ok)throw new Error('HTTP '+response.status);return response.text()}).then(function(html){
+      html=html.replace('pro-addon.js?v=1','pro-addon.js?v=3');
+      html=html.replace('pro.css?v=1','pro.css?v=3');
+      document.open();document.write(html);document.close();
+    }).catch(function(error){document.getElementById('status').textContent='No se pudo cargar. Revisá la conexión.';document.getElementById('retry').hidden=false;});
+  }
+  document.getElementById('retry').onclick=load;
+  load();
+})();
+</script>
+</body>
+</html>
