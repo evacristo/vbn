@@ -2,7 +2,7 @@
 'use strict';
 var CT=window.CT;
 if(!CT)return;
-var DEPLOY_URL='https://deploy.workers.cloudflare.com/?url=https://github.com/evacristo/vbn/tree/chatgpt-mobile-app/territorio-backend';
+var DEPLOY_URL='https://deploy.workers.cloudflare.com/?url=https://github.com/evacristo/vbn/tree/main/territorio-backend';
 var baseRenderSync=CT.renderSync;
 
 function workspace(){return CT.state.workspace}
