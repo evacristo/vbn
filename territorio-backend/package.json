@@ -1,11 +1,11 @@
 {
   "name": "corrientes-territorial-backend",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "check": "node --check src/index-v2.js && node --check src/index-v3.js",
+    "check": "node --check src/index-v2.js && node --check src/index-v3.js && node --check src/worker.js",
     "test:integration": "node scripts/integration-test.mjs",
     "deploy:worker": "wrangler deploy",
     "db:init:local": "wrangler d1 execute DB --local --file=schema-v2.sql --yes",
