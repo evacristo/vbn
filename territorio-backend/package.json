@@ -1,14 +1,15 @@
 {
   "name": "corrientes-territorial-backend",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
-    "db:init:local": "wrangler d1 execute corrientes-territorial --local --file=schema.sql",
-    "db:init:remote": "wrangler d1 execute corrientes-territorial --remote --file=schema.sql",
-    "check": "node --check src/index.js"
+    "db:init:local": "wrangler d1 execute corrientes-territorial --local --file=schema-v2.sql",
+    "db:init:remote": "wrangler d1 execute corrientes-territorial --remote --file=schema-v2.sql",
+    "check": "node --check src/index-v2.js",
+    "test:integration": "node scripts/integration-test.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.26.1"
