@@ -1,0 +1,3 @@
+# Cloudflare will request this value during one-click deployment.
+# Use a long random phrase. It is needed only to create the first administrator.
+BOOTSTRAP_SECRET=replace-with-a-long-random-secret
