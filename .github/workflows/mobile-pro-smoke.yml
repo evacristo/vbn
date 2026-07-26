@@ -38,10 +38,10 @@ jobs:
               test('complete pro workflow', async ({ page }) => {
                 const errors = [];
                 page.on('pageerror', error => errors.push(error.message));
-                await page.goto('http://127.0.0.1:8765/territorio-mobile-pro/index.html?fixture=1');
-                await page.getByLabel('Usuario').fill('Ivo');
-                await page.getByLabel('Contraseña').fill('Ivo');
-                await page.getByRole('button', { name: 'Entrar' }).click();
+                await page.goto('http://127.0.0.1:8765/territorio-mobile-pro/launch.html?fixture=1');
+                await page.locator('#loginUser').fill('Ivo');
+                await page.locator('#loginPassword').fill('Ivo');
+                await page.locator('#loginForm button[type="submit"]').click();
                 await expect(page.locator('#app')).toBeVisible();
                 await expect(page.locator('#dataHealthBadge')).toHaveText('Lista');
 
