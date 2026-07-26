@@ -4,7 +4,7 @@ Backend de sincronización para Corrientes Territorial Mobile Pro, implementado 
 
 ## Despliegue recomendado
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/evacristo/vbn/tree/chatgpt-mobile-app/territorio-backend)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/evacristo/vbn/tree/main/territorio-backend)
 
 El asistente de Cloudflare clona esta carpeta, crea los recursos vinculados y solicita `BOOTSTRAP_SECRET`. Elegí una frase larga y aleatoria y conservála hasta crear el primer administrador.
 
