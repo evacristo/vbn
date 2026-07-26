@@ -1,6 +1,6 @@
 name = "corrientes-territorial-api-ci"
-main = "src/index-v2.js"
-compatibility_date = "2026-07-01"
+main = "src/index-v3.js"
+compatibility_date = "2026-07-26"
 workers_dev = true
 
 [vars]
