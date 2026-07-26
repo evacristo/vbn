@@ -2,23 +2,12 @@ name: Deploy territorial backend
 
 on:
   workflow_dispatch:
-  push:
-    branches: [chatgpt-mobile-app]
-    paths:
-      - 'territorio-backend/**'
-      - '.github/workflows/territorio-backend-deploy.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'territorio-backend/**'
-      - '.github/workflows/territorio-backend-deploy.yml'
 
 permissions:
   contents: read
 
 jobs:
   deploy:
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[deploy-backend]')
     runs-on: ubuntu-latest
     environment: territorio-production
     defaults:
@@ -35,23 +24,13 @@ jobs:
       - run: npm install
       - name: Validate required secrets
         env:
-          D1_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
           BOOTSTRAP_SECRET: ${{ secrets.TERRITORIO_BOOTSTRAP_SECRET }}
         run: |
           test -n "$CLOUDFLARE_API_TOKEN"
           test -n "$CLOUDFLARE_ACCOUNT_ID"
-          test -n "$D1_ID"
           test -n "$BOOTSTRAP_SECRET"
-      - name: Configure D1 binding
-        env:
-          D1_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
-        run: sed -i "s/REPLACE_WITH_D1_DATABASE_ID/$D1_ID/" wrangler.toml
       - run: npm run check
-      - name: Apply database schema
-        run: npm run db:init:remote
-      - name: Ensure private file bucket exists
-        run: npx wrangler r2 bucket create corrientes-territorial-files || npx wrangler r2 bucket list | grep -q corrientes-territorial-files
-      - name: Deploy Worker
+      - name: Deploy Worker and provision D1/R2
         run: npm run deploy
       - name: Upload bootstrap secret
         env:
