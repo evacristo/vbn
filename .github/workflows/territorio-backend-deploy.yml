@@ -2,12 +2,18 @@ name: Deploy territorial backend
 
 on:
   workflow_dispatch:
+  push:
+    branches: [chatgpt-mobile-app]
+    paths:
+      - 'territorio-backend/**'
+      - '.github/workflows/territorio-backend-deploy.yml'
 
 permissions:
   contents: read
 
 jobs:
   deploy:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[deploy-backend]')
     runs-on: ubuntu-latest
     environment: territorio-production
     defaults:
@@ -38,6 +44,8 @@ jobs:
       - run: npm run check
       - name: Apply database schema
         run: npm run db:init:remote
+      - name: Ensure private file bucket exists
+        run: npx wrangler r2 bucket create corrientes-territorial-files || npx wrangler r2 bucket list | grep -q corrientes-territorial-files
       - name: Deploy Worker
         run: npm run deploy
       - name: Upload bootstrap secret
