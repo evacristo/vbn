@@ -1,0 +1,17 @@
+name = "corrientes-territorial-api-test"
+main = "src/index-v2.js"
+compatibility_date = "2026-07-01"
+
+[vars]
+ALLOWED_ORIGIN = "http://127.0.0.1:8765"
+SESSION_TTL_DAYS = "1"
+BOOTSTRAP_SECRET = "integration-bootstrap"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "corrientes-territorial-test"
+database_id = "00000000-0000-0000-0000-000000000001"
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "corrientes-territorial-files-test"
