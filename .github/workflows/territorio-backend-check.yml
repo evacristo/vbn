@@ -26,8 +26,10 @@ jobs:
           node-version: '22'
       - run: npm install
       - run: npm run check
-      - name: Validate Worker bundle
+      - name: Validate isolated Worker bundle
         run: npx wrangler deploy --dry-run --config wrangler.ci.toml --outdir dist
+      - name: Validate production auto-provisioning config
+        run: npx wrangler deploy --dry-run --config wrangler.toml --outdir dist-production
       - name: Verify shared database schema
         run: |
           python3 - <<'PY'
